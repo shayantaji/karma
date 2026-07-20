@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home_page'
+    'home_page',
+    'account_module',
+    'django_render_partial'
 ]
 
 MIDDLEWARE = [
@@ -112,8 +114,16 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'account_module.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+
+
+
+MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = '/medias/'
