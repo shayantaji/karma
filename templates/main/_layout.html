@@ -17,18 +17,18 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	{% block title %}
-
-	{% endblock %}
+    <title>
+	{% block title %}کارما{% endblock %}
+    </title>
 
     {% include 'main/header_references.html' %}
 </head>
 
 <body>
-{% render_partial 'home_page.views.header_site_component' %}
+{% render_partial 'home.views.header_site_component' %}
 {% block content %}{% endblock %}
 {% include 'main/footer_references.html' %}
-{% render_partial 'home_page.views.footer_site_component' %}
+{% render_partial 'home.views.footer_site_component' %}
 </body>
 
 </html>
