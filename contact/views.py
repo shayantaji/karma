@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from site_config.models import SiteSetting
 
 
 
@@ -9,5 +10,8 @@ from django.shortcuts import render
 
 def contact_us(request):
 
-    context = {}
+    site_info = SiteSetting.objects.filter(is_main_setting=True).first()
+    context = {
+        'site_info': site_info,
+    }
     return render(request, 'contact/contact_us.html',context)

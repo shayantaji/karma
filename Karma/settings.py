@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'contact',
     'product',
     'account_module',
+    'site_config',
 ]
 
 MIDDLEWARE = [
