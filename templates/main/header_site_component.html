@@ -1,165 +1,228 @@
 {% load static %}
 
-<!-- Start Header Area -->
-<header class="header_area sticky-header">
-	<div class="main_menu">
-		<nav class="navbar navbar-expand-lg navbar-light main_box">
-			<div class="container">
+<header class="karma-header">
 
-				<a class="navbar-brand logo_h" href="{% url 'home' %}">
-					<img src="{% static 'img/logo.png' %}" alt="">
-				</a>
+    <!-- ================= TOP BAR ================= -->
 
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent"
-					aria-expanded="false"
-					aria-label="Toggle navigation">
+    <div class="karma-topbar">
 
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
+        <div class="container">
 
-				</button>
+            <div class="karma-topbar-wrapper">
 
+                <div class="karma-topbar-right">
 
-				<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    {% if user.is_authenticated %}
 
+                        <div class="karma-user-menu">
 
-					<ul class="nav navbar-nav menu_nav ml-auto">
+                            <a href="#" class="karma-user-toggle">
 
+                                <i class="fa fa-user"></i>
 
-						<li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-							<a class="nav-link" href="{% url 'home' %}">
-								خانه
-							</a>
-						</li>
+                                {{ user.username }}
 
+                                <i class="fa fa-angle-down"></i>
 
-						<li class="nav-item submenu dropdown
-						{% if request.resolver_match.url_name == 'product_list' or request.resolver_match.url_name == 'product_single' %}active{% endif %}">
+                            </a>
 
-							<a href="{% url 'product_list' %}"
-							class="nav-link dropdown-toggle"
-							role="button">
+                            <ul class="karma-user-dropdown">
 
-								فروشگاه
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-user-circle"></i>
+                                        پنل کاربری
+                                    </a>
+                                </li>
 
-							</a>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-shopping-bag"></i>
+                                        سفارش های من
+                                    </a>
+                                </li>
 
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-heart"></i>
+                                        علاقه مندی ها
+                                    </a>
+                                </li>
 
-							<ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-map-marker"></i>
+                                        آدرس ها
+                                    </a>
+                                </li>
 
-								<li class="nav-item">
-									<a class="nav-link" href="{% url 'product_list' %}">
-										دسته بندی فروشگاه
-									</a>
-								</li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-edit"></i>
+                                        ویرایش پروفایل
+                                    </a>
+                                </li>
 
+                                <li class="karma-user-divider"></li>
 
-								<li class="nav-item">
-									<a class="nav-link" href="#">
-										بررسی محصول
-									</a>
-								</li>
+                                <li>
 
+                                    <a href="{% url 'logout' %}">
 
-							</ul>
+                                        <i class="fa fa-sign-out"></i>
 
-						</li>
+                                        خروج
 
+                                    </a>
 
+                                </li>
 
-						<li class="nav-item {% if request.resolver_match.url_name == 'article_list' or request.resolver_match.url_name == 'article_single' %}active{% endif %}">
+                            </ul>
 
-							<a class="nav-link" href="{% url 'article_list' %}">
-								مقالات
-							</a>
+                        </div>
 
-						</li>
+                    {% else %}
 
+                        <div class="karma-auth-links">
 
+                            <a href="{% url 'login' %}">
 
-						<li class="nav-item {% if request.resolver_match.url_name == 'contact_us' %}active{% endif %}">
+                                <i class="fa fa-sign-in"></i>
 
-							<a class="nav-link" href="{% url 'contact_us' %}">
-								تماس
-							</a>
+                                ورود
 
-						</li>
+                            </a>
 
+                            <span>/</span>
 
+                            <a href="{% url 'register' %}">
 
-						<li class="nav-item {% if request.resolver_match.url_name == 'login' %}active{% endif %}">
+                                ثبت نام
 
-							<a class="nav-link" href="{% url 'login' %}">
-								ورود
-							</a>
+                            </a>
 
-						</li>
+                        </div>
 
+                    {% endif %}
 
-					</ul>
+                </div>
 
+            </div>
 
+        </div>
 
-					<ul class="nav navbar-nav navbar-right">
+    </div>
 
+    <!-- ================= NAVBAR ================= -->
 
-						<li class="nav-item">
-							<a href="#" class="cart">
-								<span class="ti-bag"></span>
-							</a>
-						</li>
+    <div class="main_menu">
 
+        <nav class="navbar navbar-expand-lg navbar-light main_box">
 
-						<li class="nav-item">
+            <div class="container">
 
-							<button class="search">
-								<span class="lnr lnr-magnifier" id="search"></span>
-							</button>
+                <a class="navbar-brand logo_h" href="{% url 'home' %}">
 
-						</li>
+                    <img src="{% static 'img/logo.png' %}" alt="">
 
+                </a>
 
-					</ul>
+                <button class="navbar-toggler"
 
+                        type="button"
 
-				</div>
+                        data-toggle="collapse"
 
-			</div>
-		</nav>
-	</div>
+                        data-target="#karmaNavbar"
 
+                        aria-controls="karmaNavbar"
 
+                        aria-expanded="false">
 
-	<div class="search_input" id="search_input_box">
+                    <span class="icon-bar"></span>
 
-		<div class="container">
+                    <span class="icon-bar"></span>
 
-			<form class="d-flex justify-content-between">
+                    <span class="icon-bar"></span>
 
-				<input type="text"
-				class="form-control"
-				id="search_input"
-				placeholder="عنوان جستجو...">
+                </button>
 
+                <div class="collapse navbar-collapse"
 
-				<button type="submit" class="btn"></button>
+                     id="karmaNavbar">
 
+                    <ul class="navbar-nav karma-nav">
 
-				<span class="lnr lnr-cross"
-				id="close_search"
-				title="Close Search"></span>
+                        <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
 
+                            <a class="nav-link"
 
-			</form>
+                               href="{% url 'home' %}">
 
-		</div>
+                                خانه
 
-	</div>
+                            </a>
 
+                        </li>
+
+                        <li class="nav-item dropdown {% if request.resolver_match.url_name == 'product_list' or request.resolver_match.url_name == 'product_single' %}active{% endif %}">
+
+                            <a class="nav-link"
+                               href="{% url 'product_list' %}">
+
+                                فروشگاه
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item {% if request.resolver_match.url_name == 'article_list' or request.resolver_match.url_name == 'article_single' %}active{% endif %}">
+
+                            <a class="nav-link"
+                               href="{% url 'article_list' %}">
+
+                                مقالات
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item {% if request.resolver_match.url_name == 'contact_us' %}active{% endif %}">
+
+                            <a class="nav-link"
+
+                               href="{% url 'contact_us' %}">
+
+                                تماس با ما
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                    <div class="karma-nav-icons">
+
+                        <a href="#" class="karma-search">
+
+                            <span class="lnr lnr-magnifier"></span>
+
+                        </a>
+
+                        <a href="#" class="karma-cart">
+
+                            <span class="ti-bag"></span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </div>
 
 </header>
-
-<!-- End Header Area -->
