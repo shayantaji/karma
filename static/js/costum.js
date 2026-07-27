@@ -15,3 +15,15 @@ window.addEventListener("scroll", function () {
     }
 
 });
+
+const overlay = document.getElementById("mapOverlay");
+
+if (overlay) {
+
+    overlay.addEventListener("click", function () {
+
+        this.style.display = "none";
+
+    });
+
+}
