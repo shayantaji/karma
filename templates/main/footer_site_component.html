@@ -44,16 +44,15 @@
 				</div>
 				<div class="col-lg-3  col-md-6 col-sm-6">
 					<div class="single-footer-widget mail-chimp">
-						<h6 class="mb-20">کارما تیم</h6>
+						<h6 class="mb-20">{{ footer_gallery.title }}</h6>
 						<ul class="instafeed d-flex flex-wrap">
-							<li><img src="{% static 'img/i1.jpg' %}" alt=""></li>
-							<li><img src="{% static 'img/i2.jpg' %}" alt=""></li>
-							<li><img src="{% static 'img/i3.jpg' %}" alt=""></li>
-							<li><img src="{% static 'img/i4.jpg' %}" alt=""></li>
-							<li><img src="{% static 'img/i5.jpg' %}" alt=""></li>
-							<li><img src="{% static 'img/i6.jpg' %}" alt=""></li>
-							<li><img src="{% static 'img/i7.jpg' %}" alt=""></li>
-							<li><img src="{% static 'img/i8.jpg' %}" alt=""></li>
+							{% for gallery in footer_gallery.images.all %}
+
+                                <li><img src="{{ gallery.image.url }}" alt="{{ footer_gallery.title }}"></li>
+
+							{% endfor %}
+
+
 						</ul>
 					</div>
 				</div>

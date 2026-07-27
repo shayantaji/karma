@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from site_config.models import SiteSetting
+from site_config.models import SiteSetting, FooterKarmaGallery
 
 
 # Create your views here.
@@ -26,10 +26,11 @@ def header_site_component(request):
 
 
 def footer_site_component(request):
-
+    footer_gallery = FooterKarmaGallery.objects.first()
     site_info = SiteSetting.objects.filter(is_main_setting=True).first()
     context = {
         'site_info': site_info,
+        'footer_gallery': footer_gallery,
     }
 
     return render(request,"main/footer_site_component.html",context)

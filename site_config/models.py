@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import CharField
 
 
 class SiteSetting(models.Model):
@@ -29,3 +30,40 @@ class SiteSetting(models.Model):
     class Meta:
         verbose_name = 'تنظیمات سایت'
         verbose_name_plural = 'تنظیمات '
+
+
+
+
+
+class  FooterKarmaGallery(models.Model):
+    site = models.ForeignKey(SiteSetting, on_delete=models.CASCADE )
+    title= models.CharField(max_length=300,blank=True,null=True,verbose_name='متن تیتر')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'تصاویر گالری کارما فوتری'
+        verbose_name_plural = 'گالری کارما '
+
+
+class FooterKarmaGalleryList(models.Model):
+
+    gallery = models.ForeignKey(
+        FooterKarmaGallery,
+        on_delete=models.CASCADE,
+        related_name='images',
+        verbose_name='گالری تصاویر'
+
+    )
+
+    image = models.ImageField(
+        upload_to='images/footer_karma_gallery/',verbose_name='تصویر'
+    )
+
+    def __str__(self):
+        return 'گالری کارما'
+
+    class Meta:
+        verbose_name = 'تصویر'
+        verbose_name_plural = 'گالری تصاویر'

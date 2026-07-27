@@ -9,4 +9,18 @@ class SiteSettingAdmin(admin.ModelAdmin):
     list_editable = ('email',)
 
 
+
+class FooterKarmaGalleryListInline(admin.TabularInline):
+
+    model = models.FooterKarmaGalleryList
+    extra = 8
+
+
+class FooterKarmaGalleryAdmin(admin.ModelAdmin):
+    list_display = ['site']
+    inlines = [FooterKarmaGalleryListInline]
+
+
+
 admin.site.register(models.SiteSetting, SiteSettingAdmin)
+admin.site.register(models.FooterKarmaGallery,FooterKarmaGalleryAdmin)
