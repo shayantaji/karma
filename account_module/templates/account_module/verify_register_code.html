@@ -1,7 +1,7 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
 {% block title %}
-    صفحه ورود
+    صفحه فعالسازی
 {% endblock %}
 
 {% block content %}
@@ -12,10 +12,10 @@
         <div class="container">
             <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
                 <div class="col-first">
-                    <h1>ورود</h1>
+                    <h1>ثبت نام </h1>
                     <nav class="d-flex align-items-center">
                         <a href="index.html">خانه<span class="lnr lnr-arrow-left"></span></a>
-                        <a href="#">ورود</a>
+                        <a href="#">صفحه دریافت کد فعالسازی</a>
                     </nav>
                 </div>
             </div>
@@ -23,7 +23,7 @@
     </section>
     <!-- End Banner Area -->
 
-    <!--================Login Box Area =================-->
+    <!--================register Box Area =================-->
     <section id="auth-section" class="login_box_area section_gap">
         <div class="container">
             <div class="row">
@@ -31,46 +31,48 @@
                     <div class="login_box_img">
                         <img class="img-fluid" src="{% static 'img/login.jpg' %}" alt="">
                         <div class="hover">
-                            <h4>جدید به وب سایت ما؟</h4>
-                            <p>هر روز پیشرفت هایی در علم و فناوری صورت می گیرد و نمونه بارز آن همین است</p>
-                            <a class="primary-btn" href="{% url 'register' %}">ایجاد حساب</a>
+                            <h4>قبلا ثبت نام کرده اید؟</h4>
+                            <p>درصورتی که از قبل حساب کاربری خود را ایجاد کرده اید به صفحه ورود وارد شوید</p>
+                            <a class="primary-btn" href="{% url 'login' %}">صفحه ورود </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="login_form_inner">
-                        <h3>صفحه ورود</h3>
-                        <form class="row login_form" method="post" id="loginForm" novalidate>
+                        <h3>برای ثبت نام اطلاعات را کامل کنید</h3>
+                        <form class="row login_form" method="post" id="verifyRegisterForm" novalidate>
 
                             {% csrf_token %}
 
                             <div class="col-md-12 form-group">
-                                {{ form.username_phone }}
+
+                                {{ form.code }}
+
+                                {{ form.code.errors }}
 
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                {{ form.password }}
-                                {{ form.password.errors }}
-                                {{ form.username_phone.errors }}
-                            </div>
-
-                            {% if form.non_field_errors %}
-                                <div class="col-md-12 form-group">
-                                    {{ form.non_field_errors }}
-                                </div>
-                            {% endif %}
 
                             <div class="col-md-12 form-group">
-                                <button type="submit"
-                                        class="primary-btn">
-                                    ورود
+
+                                <button type="submit" class="primary-btn">
+
+                                    تایید حساب
+
                                 </button>
 
-                                <a href="{% url 'forgot_password' %}">
-                                    فراموشی رمز عبور؟
-                                </a>
                             </div>
+
+
+                            {% if form.non_field_errors %}
+
+                                <div class="col-md-12">
+
+                                    {{ form.non_field_errors }}
+
+                                </div>
+
+                            {% endif %}
 
                         </form>
                     </div>
@@ -78,7 +80,7 @@
             </div>
         </div>
     </section>
-    <!--================End Login Box Area =================-->
+    <!--================End register Box Area =================-->
 
 
 

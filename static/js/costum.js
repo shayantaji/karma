@@ -27,3 +27,34 @@ if (overlay) {
     });
 
 }
+document.addEventListener("DOMContentLoaded", function () {
+
+    const errorList = document.querySelector(".errorlist");
+
+    if (errorList) {
+
+        const form = errorList.closest("form");
+
+        if (form) {
+
+            form.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        }
+
+    }
+
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const section = document.getElementById("auth-section");
+
+    if (section) {
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+});

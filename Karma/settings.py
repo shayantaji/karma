@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ielv4d1+y+fp+3u#b$siok8^5$45&--lw-82jhds)l*8z3k+kg'
+
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -131,3 +134,7 @@ STATICFILES_DIRS = [ BASE_DIR / 'static' ]
 
 MEDIA_ROOT = BASE_DIR / 'uploads'
 MEDIA_URL = '/medias/'
+
+#kavenegarsetting
+KAVENEGAR_API_KEY = config("KAVENEGAR_API_KEY")
+KAVENEGAR_SENDER = config("KAVENEGAR_SENDER")

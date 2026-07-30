@@ -370,3 +370,35 @@ body.karma-header-padding {
     }
 
 }
+
+/* تمام خطاهای فرم جنگو */
+
+.errorlist {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+}
+
+.errorlist li {
+    color: #dc3545;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 5px;
+    text-align: right;
+}
+
+/* خطاهای عمومی فرم (non_field_errors) */
+
+.nonfield {
+    color: #dc3545;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+/* کادر ورودی که خطا دارد */
+
+input.is-invalid {
+    border-color: #dc3545;
+}
