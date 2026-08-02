@@ -94,6 +94,14 @@ class LoginForm(forms.Form):
             'required': 'رمز عبور را وارد کنید.'
         }
     )
+    remember_me = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                "id": "remember_me"
+            }
+        )
+    )
 
 
 class VerifyRegisterCodeForm(forms.Form):

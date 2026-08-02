@@ -7,6 +7,7 @@ def send_verify_sms(phone, code):
         api = KavenegarAPI(settings.KAVENEGAR_API_KEY)
 
         params = {
+            "sender": "2000660110",
             "receptor": phone,
             "message": f"کد تایید شما: {code}"
         }
@@ -17,6 +18,8 @@ def send_verify_sms(phone, code):
 
     except Exception as e:
 
-        print("Kavenegar Error:", e)
+        print(type(e))
+
+        print(e)
 
         return False

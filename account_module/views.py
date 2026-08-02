@@ -12,6 +12,7 @@ from datetime import datetime
 from account_module.forms import RegisterForm, LoginForm, VerifyRegisterCodeForm, ForgotPasswordForm, ResetPasswordForm, \
     VerifyForgotPasswordCodeForm
 from account_module.models import User
+from utils.sms import send_verify_sms
 
 
 # Create your views here.
@@ -52,15 +53,14 @@ class RegisterView(FormView):
         ).isoformat()
         print(otp)
 
+        sms_sent = send_verify_sms(phone, otp)
 
-        # sms_sent = send_verify_sms(phone, otp)
-        #
-        # if not sms_sent:
-        #     form.add_error(
-        #         None,
-        #         'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
-        #     )
-        #     return self.form_invalid(form)
+        if not sms_sent:
+            form.add_error(
+                None,
+                'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
+            )
+            return self.form_invalid(form)
 
         return super().form_valid(form)
 
@@ -171,12 +171,16 @@ class LoginView(FormView):
             )
             return self.form_invalid(form)
 
+        remember_me = form.cleaned_data.get("remember_me")
+
+        if remember_me:
+            self.request.session.set_expiry(60 * 60 * 24 * 30)  # 30 روز
+        else:
+            self.request.session.set_expiry(0)  # تا بسته شدن مرورگر
+
         login(self.request, user)
 
         return super().form_valid(form)
-
-
-
 
 class ForgotPasswordView(FormView):
 
@@ -220,10 +224,16 @@ class ForgotPasswordView(FormView):
 
         print("FORGOT PASSWORD OTP:", otp)
 
-        # send_verify_sms(phone, otp)
+        sms_sent = send_verify_sms(phone, otp)
+
+        if not sms_sent:
+            form.add_error(
+                None,
+                'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
+            )
+            return self.form_invalid(form)
 
         return super().form_valid(form)
-
 
 class VerifyForgotPasswordCodeView(FormView):
 
@@ -348,8 +358,6 @@ class ResetPasswordView(FormView):
         )
 
         return super().form_valid(form)
-
-
 
 class LogoutView(View):
 
