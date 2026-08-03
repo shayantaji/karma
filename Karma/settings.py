@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'product',
     'account_module',
     'site_config',
+    'user_panel',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,6 @@ MEDIA_URL = '/medias/'
 #kavenegarsetting
 KAVENEGAR_API_KEY = config("KAVENEGAR_API_KEY")
 KAVENEGAR_SENDER = config("KAVENEGAR_SENDER")
+
+
+LOGIN_URL = 'login'

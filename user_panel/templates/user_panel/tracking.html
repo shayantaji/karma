@@ -1,0 +1,51 @@
+{% extends 'main/_layout.html' %}
+{% block title %}
+	صفحه پیگیری سفارش
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>ردیابی</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">خانه<span class="lnr lnr-arrow-left"></span></a>
+                        <a href="#">ردیابی</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Tracking Box Area =================-->
+    <section class="tracking_box_area section_gap">
+        <div class="container">
+            <div class="tracking_box_inner">
+                <p>برای پیگیری سفارش خود لطفا شناسه سفارش خود را در کادر زیر وارد کرده و دکمه "ردیابی" را فشار دهید. این
+                    در رسید و در ایمیل تأییدی که باید دریافت می کردید به شما داده شد.</p>
+                <form class="row tracking_form" action="#" method="post" novalidate="novalidate">
+                    <div class="col-md-12 form-group">
+                        <input type="text" class="form-control" id="order" name="order" placeholder="شناسه سفارش"
+                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'شناسه سفارش'">
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="آدرس ایمیل"
+                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'آدرس ایمیل'">
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <button type="submit" value="submit" class="primary-btn">ردیابی سفارش</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!--================End Tracking Box Area =================-->
+
+
+
+{% endblock %}

@@ -1,6 +1,5 @@
 import random
 from datetime import timedelta
-
 from django.contrib.auth import logout, login
 from django.db.models import Q
 from django.shortcuts import redirect
@@ -53,20 +52,16 @@ class RegisterView(FormView):
         ).isoformat()
         print(otp)
 
-        sms_sent = send_verify_sms(phone, otp)
-
-        if not sms_sent:
-            form.add_error(
-                None,
-                'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
-            )
-            return self.form_invalid(form)
+        # sms_sent = send_verify_sms(phone, otp)
+        #
+        # if not sms_sent:
+        #     form.add_error(
+        #         None,
+        #         'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
+        #     )
+        #     return self.form_invalid(form)
 
         return super().form_valid(form)
-
-
-
-
 
 class VerifyRegisterCodeView(FormView):
 
@@ -125,14 +120,12 @@ class VerifyRegisterCodeView(FormView):
 
         login(self.request, user)
 
-        del self.request.session['register_data']
+        self.request.session.pop('register_data', None)
+        self.request.session.pop('register_otp', None)
+        self.request.session.pop('register_otp_expire', None)
 
-        del self.request.session['register_otp']
-
-        del self.request.session['register_otp_expire']
 
         return super().form_valid(form)
-
 
 class LoginView(FormView):
 
@@ -176,7 +169,7 @@ class LoginView(FormView):
         if remember_me:
             self.request.session.set_expiry(60 * 60 * 24 * 30)  # 30 روز
         else:
-            self.request.session.set_expiry(0)  # تا بسته شدن مرورگر
+            self.request.session.set_expiry(0)
 
         login(self.request, user)
 
@@ -208,30 +201,23 @@ class ForgotPasswordView(FormView):
 
             return self.form_invalid(form)
 
-
-
         otp = random.randint(100000, 999999)
-
-
         self.request.session['forgot_password_phone'] = phone
-
         self.request.session['forgot_password_otp'] = str(otp)
-
-
         self.request.session['forgot_password_expire'] = (
             timezone.now() + timedelta(minutes=2)
         ).isoformat()
 
         print("FORGOT PASSWORD OTP:", otp)
 
-        sms_sent = send_verify_sms(phone, otp)
-
-        if not sms_sent:
-            form.add_error(
-                None,
-                'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
-            )
-            return self.form_invalid(form)
+        # sms_sent = send_verify_sms(phone, otp)
+        #
+        # if not sms_sent:
+        #     form.add_error(
+        #         None,
+        #         'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
+        #     )
+        #     return self.form_invalid(form)
 
         return super().form_valid(form)
 
