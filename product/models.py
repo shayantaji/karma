@@ -6,13 +6,7 @@ class ProductCategory(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
 
-    parent = models.ForeignKey(
-        "self",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="children"
-    )
+    parent = models.ForeignKey("self",on_delete=models.CASCADE,blank=True,null=True,related_name="children")
 
     is_active = models.BooleanField(default=True)
 
