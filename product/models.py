@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from slugify import slugify
 
 
@@ -17,17 +18,16 @@ class ProductCategory(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def has_children(self):
+        return self.children.filter(is_active=True).exists()
 
 
 class ProductBrand(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
 
-    image = models.ImageField(
-        upload_to="brands/",
-        blank=True,
-        null=True
-    )
+    image = models.ImageField(upload_to="brands/",blank=True,null=True)
 
     is_active = models.BooleanField(default=True)
 
@@ -44,56 +44,31 @@ class Product(models.Model):
 
     slug = models.SlugField(unique=True)
 
-    category = models.ForeignKey(
-        ProductCategory,
-        on_delete=models.PROTECT,
-        related_name="products"
-    )
+    category = models.ForeignKey(ProductCategory,on_delete=models.PROTECT,related_name="products")
 
-    brand = models.ForeignKey(
-        ProductBrand,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="products"
-    )
+    brand = models.ForeignKey(ProductBrand,on_delete=models.SET_NULL,null=True,blank=True,related_name="products")
 
-    short_description = models.CharField(
-        max_length=500
-    )
+    short_description = models.CharField(max_length=500)
 
     description = models.TextField()
 
     price = models.PositiveBigIntegerField()
 
-    discount_percent = models.PositiveSmallIntegerField(
-        default=0
-    )
+    discount_percent = models.PositiveSmallIntegerField(default=0)
 
-    inventory = models.PositiveIntegerField(
-        default=0
-    )
+    inventory = models.PositiveIntegerField(default=0)
 
-    weight = models.PositiveIntegerField(
-        default=0,
-        help_text="گرم"
-    )
+    weight = models.PositiveIntegerField(default=0,help_text="گرم")
 
     is_active = models.BooleanField(default=True)
 
     is_deleted = models.BooleanField(default=False)
 
-    is_special = models.BooleanField(
-        default=False
-    )
+    is_special = models.BooleanField(default=False)
 
-    created_date = models.DateTimeField(
-        auto_now_add=True
-    )
+    created_date = models.DateTimeField(auto_now_add=True)
 
-    updated_date = models.DateTimeField(
-        auto_now=True
-    )
+    updated_date = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-created_date"]
@@ -118,6 +93,13 @@ class Product(models.Model):
     def is_in_stock(self):
         return self.inventory > 0
 
+    @property
+    def main_image(self):
+        return self.images.filter(is_main=True).first()
+
+    def get_absolute_url(self):
+        return reverse('product_single', args=[self.slug])
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
@@ -125,21 +107,14 @@ class Product(models.Model):
 
 
 
+
 class ProductImage(models.Model):
 
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
-        related_name="images"
-    )
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name="images")
 
-    image = models.ImageField(
-        upload_to="products/"
-    )
+    image = models.ImageField(upload_to="products/")
 
-    is_main = models.BooleanField(
-        default=False
-    )
+    is_main = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "تصویر محصول"
@@ -150,11 +125,7 @@ class ProductImage(models.Model):
 
 class ProductSpecification(models.Model):
 
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
-        related_name="specifications"
-    )
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name="specifications")
 
     key = models.CharField(max_length=200)
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from account_module.models import User
 
@@ -33,7 +34,6 @@ class ArticleTag(models.Model):
 
     def __str__(self):
         return self.title
-
 
 
 
@@ -72,3 +72,6 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('article_single', args=[self.slug])

@@ -1,0 +1,40 @@
+{% load static%}
+<article class="row blog_item">
+                                <div class="col-md-3">
+                                    <div class="blog_info text-right">
+                                        <div class="post_tag">
+                                            {% for tag in article.tags.all %}
+                                                <a href="#">{{ tag.title }}{% if not forloop.last %}،{% endif %}</a>
+                                            {% endfor %}
+                                        </div>
+                                        <ul class="blog_meta list">
+                                            <li><a href="#"><i
+                                                    class="lnr lnr-user"></i>{{ article.author|default:"نویسنده سایت" }}
+                                            </a></li>
+                                            <li><a href="#"><i
+                                                    class="lnr lnr-calendar-full"></i>{{ article.created_date|date:"Y/m/d" }}
+                                            </a></li>
+                                            <li><a href="#"><i class="lnr lnr-eye"></i>{{ article.view_count }}
+                                                مشاهده</a></li>
+                                            <li><a href="#"><i class="lnr lnr-bubble"></i>0 نظر</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="blog_post">
+                                        {% if article.image %}
+                                            <img src="{{ article.image.url }}" alt="{{ article.title }}">
+                                        {% else %}
+                                            <img src="{% static 'img/blog/main-blog/m-blog-1.jpg' %}"
+                                                 alt="{{ article.title }}">
+                                        {% endif %}
+                                        <div class="blog_details">
+                                            <a href="#">
+                                                <h2>{{ article.title }}</h2>
+                                            </a>
+                                            <p>{{ article.short_description }}</p>
+                                            <a href={{ article.get_absolute_url }} class="white_bg_btn">مشاهده بیشتر</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>

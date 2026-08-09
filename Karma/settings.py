@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'django_render_partial',
+    'sorl.thumbnail',
     'article',
     'contact',
     'product',
