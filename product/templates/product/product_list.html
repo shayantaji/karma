@@ -1,5 +1,6 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
+{% load poll_extras %}
 {% block title %}
     صفحه محصولات
 {% endblock %}
@@ -77,29 +78,27 @@
 
                 <div class="sidebar-filter mt-50">
                     <div class="top-filter-head">فیلتر محصولات</div>
-
                     <div class="common-filter">
                         <div class="head">برندها</div>
-
-                        <form action="#">
-                            <ul>
-                                {% for brand in brands %}
-                                    <li class="filter-list">
-                                        <input class="pixel-radio"
-                                               type="radio"
-                                               id="brand{{ brand.id }}"
-                                               name="brand"
-                                               value="{{ brand.slug }}">
-
-                                        <label for="brand{{ brand.id }}">
-                                            {{ brand.title }}
-                                            <span>({{ brand.products.count }})</span>
-                                        </label>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </form>
+                        <ul>
+                            {% for brand in brands %}
+                                <li class="filter-list">
+                                    <input class="pixel-radio"
+                                           type="radio"
+                                           id="brand{{ brand.id }}"
+                                           name="brand"
+                                           value="{{ brand.slug }}"
+                                           {% if request.GET.brand == brand.slug %}checked{% endif %}
+                                           onchange="window.location.href='{% query_replace brand=brand.slug %}'">
+                                    <label for="brand{{ brand.id }}">
+                                        {{ brand.title }}
+                                        <span>({{ brand.products.count }})</span>
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
+
 
                     <div class="common-filter">
                         <div class="head">قیمت</div>
@@ -285,5 +284,12 @@
     </div>
 
     {% include 'weekly_deals/includes/weekly_deals.html' %}
+
+<script>
+    const priceRangeMin={{ price_range.min_price|default:0 }};
+    const priceRangeMax={{ price_range.max_price|default:0 }};
+    const selectedPriceMin={{ request.GET.min_price|default:0 }};
+    const selectedPriceMax={{ request.GET.max_price|default:0 }};
+</script>
 
 {% endblock %}

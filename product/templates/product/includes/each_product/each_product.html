@@ -1,4 +1,5 @@
- <div class="col-lg-4 col-md-6">
+{% load poll_extras %}
+<div class="col-lg-4 col-md-6">
 
                                 <div class="single-product">
                                      <a href="{{ product.get_absolute_url }}">
@@ -14,12 +15,12 @@
                                         <div class="price">
 
                                             <h6>
-                                                {{ product.price }} تومان
+                                                {{ product.price | three_digits_currency }}
                                             </h6>
 
                                             {% if product.old_price %}
                                                 <h6 class="l-through">
-                                                    {{ product.old_price }} تومان
+                                                    {{ product.old_price }}
                                                 </h6>
                                             {% endif %}
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, TemplateView, DetailView
 from product.models import Product, ProductCategory, ProductBrand
-from django.db.models import Count, Q, F, ExpressionWrapper, FloatField
+from django.db.models import Count, Q, F, ExpressionWrapper, FloatField,Min,Max
 
 
 # Create your views here.
@@ -26,7 +26,7 @@ class ProductListView(ListView):
             is_active=True,
             is_deleted=False
         )
-
+        #filter_category
         category = self.request.GET.get('category')
 
         if category:
@@ -50,23 +50,41 @@ class ProductListView(ListView):
                         category=selected_category
                     )
 
+        #Brand
+        brand = self.request.GET.get('brand')
+        if brand:
+            queryset = queryset.filter(brand__slug=brand)
+
+        #filter_price
+        queryset = queryset.annotate(
+            calculated_final_price=ExpressionWrapper(
+                F('price') - (F('price') * F('discount_percent') / 100),
+                output_field=FloatField()
+            )
+        )
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+        price_queryset = queryset
+        if min_price:
+            queryset = queryset.filter(calculated_final_price__gte=min_price)
+        if max_price:
+            queryset = queryset.filter(calculated_final_price__lte=max_price)
+        self.price_range = price_queryset.aggregate(
+            min_price=Min('calculated_final_price'),
+            max_price=Max('calculated_final_price')
+        )
+
+        #sort_filter
         sort = self.request.GET.get('sort', '1')
 
         if sort == '2':
             queryset = queryset.order_by('-created_date')
 
         elif sort == '3':
-            queryset = queryset.annotate(
-                calculated_final_price=ExpressionWrapper(
-                    F('price') - (
-                            F('price') * F('discount_percent') / 100
-                    ),
-                    output_field=FloatField()
-                )
-            ).order_by('calculated_final_price')
-
+            queryset=queryset.order_by('calculated_final_price')
         else:
             queryset = queryset.order_by('-created_date')
+
 
         return queryset
 
@@ -91,7 +109,9 @@ class ProductListView(ListView):
 
         context['categories'] = categories
 
-        context['brands'] = ProductBrand.objects.filter(is_active=True)
+        context['brands'] = ProductBrand.objects.filter(is_active=True)[:10]
+
+        context['price_range'] = self.price_range
 
         query_params = self.request.GET.copy()
         query_params.pop('page', None)

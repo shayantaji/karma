@@ -247,46 +247,50 @@ $(document).ready(function(){
 
 
     //----- Active No ui slider --------//
+$(function(){
+    if(document.getElementById("price-range")){
+        var nonLinearSlider=document.getElementById('price-range');
+        var minPrice=priceRangeMin;
+        var maxPrice=priceRangeMax;
 
+        if(maxPrice>minPrice){
+            var selectedMin=selectedPriceMin;
+            var selectedMax=selectedPriceMax;
 
+            var startMin=selectedMin>0?selectedMin:minPrice;
+            var startMax=selectedMax>0?selectedMax:maxPrice;
 
-    $(function(){
+            noUiSlider.create(nonLinearSlider,{
+                connect:true,
+                behaviour:'tap',
+                start:[startMin,startMax],
+                step:5000000,
+                range:{
+                    'min':minPrice,
+                    'max':maxPrice
+                }
+            });
 
-        if(document.getElementById("price-range")){
-        
-        var nonLinearSlider = document.getElementById('price-range');
-        
-        noUiSlider.create(nonLinearSlider, {
-            connect: true,
-            behaviour: 'tap',
-            start: [ 5000, 40000 ],
-            range: {
-                // Starting at 500, step the value by 500,
-                // until 4000 is reached. From there, step by 1000.
-                'min': [ 0 ],
-                '10%': [ 5000, 5000 ],
-                '50%': [ 40000, 10000 ],
-                'max': [ 100000 ]
-            }
-        });
+            var nodes=[
+                document.getElementById('lower-value'),
+                document.getElementById('upper-value')
+            ];
 
+            nonLinearSlider.noUiSlider.on('update',function(values,handle){
+                nodes[handle].innerHTML=Math.round(values[handle]).toLocaleString('en-US');
+            });
 
-        var nodes = [
-            document.getElementById('lower-value'), // 0
-            document.getElementById('upper-value')  // 1
-        ];
-
-        // Display the slider value and how far the handle moved
-        // from the left edge of the slider.
-        nonLinearSlider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
-            nodes[handle].innerHTML = values[handle];
-        });
-
+            nonLinearSlider.noUiSlider.on('change',function(values){
+                var url=new URL(window.location.href);
+                url.searchParams.set('min_price',Math.round(values[0]));
+                url.searchParams.set('max_price',Math.round(values[1]));
+                url.searchParams.delete('page');
+                window.location.href=url.toString();
+            });
         }
+    }
+});
 
-    });
-
-    
     //-------- Have Cupon Button Text Toggle Change -------//
 
     $('.have-btn').on('click', function(e){

@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'account_module',
     'site_config',
     'user_panel',
+    'polls',
+
 ]
 
 MIDDLEWARE = [
