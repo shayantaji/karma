@@ -29,7 +29,7 @@
                                                  alt="{{ article.title }}">
                                         {% endif %}
                                         <div class="blog_details">
-                                            <a href="#">
+                                            <a href="{{ article.get_absolute_url }}">
                                                 <h2>{{ article.title }}</h2>
                                             </a>
                                             <p>{{ article.short_description }}</p>

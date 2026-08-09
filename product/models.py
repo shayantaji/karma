@@ -23,6 +23,7 @@ class ProductCategory(models.Model):
         return self.children.filter(is_active=True).exists()
 
 
+
 class ProductBrand(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
