@@ -1,6 +1,7 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
 {% block title %}
+{% load render_partial %}
     جزئیات محصول
 {% endblock %}
 
@@ -476,5 +477,51 @@
         </div>
     </section>
     <!--================End Product Description Area =================-->
+
+<!-- Start related-product Area -->
+{% if related_products %}
+<section class="related-product-area section_gap_bottom">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <div class="section-title">
+                    <h1>محصولات مرتبط</h1>
+                    <p>محصولات مرتبط با این محصول را مشاهده کنید.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    {% for product in related_products %}
+                    <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+                        <div class="single-related-product d-flex">
+                            <a href="{{ product.get_absolute_url }}">
+                                {% if product.main_image %}
+                                    <img src="{{ product.main_image.image.url }}" alt="{{ product.title }}" style="width:70px;height:70px;object-fit:cover;">
+                                {% endif %}
+                            </a>
+                            <div class="desc">
+                                <a href="{{ product.get_absolute_url }}" class="title">{{ product.title }}</a>
+                                <div class="price">
+                                    <h6>{{ product.final_price|floatformat:0 }} تومان</h6>
+                                    {% if product.discount_percent > 0 %}
+                                        <h6 class="l-through">{{ product.price|floatformat:0 }} تومان</h6>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- End related-product Area -->
+
 
 {% endblock %}

@@ -12,16 +12,35 @@ class ArticleView(ListView):
     context_object_name = 'articles'
     paginate_by = 3
 
+    def get_queryset(self):
+        queryset = Article.objects.filter(is_active=True,is_deleted=False).select_related('category','author').prefetch_related('tags')
+
+        category = self.request.GET.get('category')
+
+        if category:
+            queryset = queryset.filter(category__slug=category)
+
+        return queryset
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['categories'] = ArticleCategory.objects.filter(is_active=True).annotate(article_count=Count('articles'
-        ,filter=Q(articles__is_active=True,articles__is_deleted=False))).order_by('-article_count')[:4]
+        ,filter=Q(articles__is_active=True,articles__is_deleted=False))).order_by('-article_count')[:3]
 
+        context['categories_sidebar'] = ArticleCategory.objects.filter(is_active=True).annotate(article_count=Count('articles'
+        ,filter=Q(articles__is_active=True,articles__is_deleted=False))).order_by('-article_count')[:8]
 
         context['tags'] = ArticleTag.objects.filter(is_active=True)
 
         context['popular_articles'] = Article.objects.filter(is_active=True,is_deleted=False).order_by('-view_count')[:4]
+
+
+        query_params = self.request.GET.copy()
+        query_params.pop('page', None)
+        context['query_params'] = query_params.urlencode()
+
 
         return context
 

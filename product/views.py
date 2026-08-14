@@ -117,6 +117,9 @@ class ProductListView(ListView):
         query_params.pop('page', None)
         context['query_params'] = query_params.urlencode()
 
+        context['weekly_deals'] = Product.objects.filter(is_active=True,is_deleted=False,discount_percent__gt=0
+        ).select_related('category','brand').prefetch_related('images').order_by('-discount_percent')[:9]
+
 
         return context
 
@@ -124,3 +127,12 @@ class ProductSingleView(DetailView):
     template_name = 'product/product_single.html'
     model = Product
     context_object_name = "product"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['related_products'] = Product.objects.filter(category=self.object.category,is_active=True,is_deleted=False
+        ).exclude(id=self.object.id).select_related('category','brand').prefetch_related('images')[:9]
+
+        return context
+

@@ -1,6 +1,6 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
-
+{% load render_partial %}
 {% block title %}
 	صفحه خانه
 {% endblock %}
@@ -818,6 +818,6 @@
 		</div>
 	</section>
 	<!-- End brand Area -->
-    {% include 'weekly_deals/includes/weekly_deals.html' %}
+{% include 'product/includes/weekly_deals/weekly_deals.html' %}
 
 {% endblock %}

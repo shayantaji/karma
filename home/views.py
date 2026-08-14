@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from product.models import Product
 from site_config.models import SiteSetting, FooterKarmaGallery
 
 
@@ -7,9 +8,15 @@ from site_config.models import SiteSetting, FooterKarmaGallery
 
 
 def home_page(request):
+
+    weekly_deals = Product.objects.filter(is_active=True,is_deleted=False,discount_percent__gt=0
+        ).select_related('category','brand').prefetch_related('images').order_by('-discount_percent')[:9]
+
+
     site_info = SiteSetting.objects.filter(is_main_setting=True).first()
     context = {
         'site_info': site_info,
+        'weekly_deals': weekly_deals,
     }
 
     return  render(request,'home_page/home_page.html',context)

@@ -1,6 +1,7 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
 {% load poll_extras %}
+{% load render_partial %}
 {% block title %}
     صفحه محصولات
 {% endblock %}
@@ -283,7 +284,9 @@
     </div>
     </div>
 
-    {% include 'weekly_deals/includes/weekly_deals.html' %}
+
+
+    {% include 'product/includes/weekly_deals/weekly_deals.html' %}
 
 <script>
     const priceRangeMin={{ price_range.min_price|default:0 }};
