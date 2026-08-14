@@ -2,256 +2,256 @@
 {% load static %}
 
 {% block title %}
-جزئیات مقاله
+    جزئیات مقاله
 {% endblock %}
 
 {% block content %}
 
-<!-- Start Banner Area -->
-<section class="banner-area organic-breadcrumb">
-    <div class="container">
-        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-            <div class="col-first">
-                <h1>جزئیات وبلاگ</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="{% url 'home' %}">خانه<span class="lnr lnr-arrow-left"></span></a>
-                    <a href="#">جزئیات وبلاگ</a>
-                </nav>
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>جزئیات وبلاگ</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="{% url 'home' %}">خانه<span class="lnr lnr-arrow-left"></span></a>
+                        <a href="#">جزئیات وبلاگ</a>
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- End Banner Area -->
+    </section>
+    <!-- End Banner Area -->
 
-<!--================Blog Area =================-->
-<section class="blog_area single-post-area section_gap">
-    <div class="container">
-        <div class="row">
+    <!--================Blog Area =================-->
+    <section class="blog_area single-post-area section_gap">
+        <div class="container">
+            <div class="row">
 
-            <!-- محتوا -->
-            <div class="col-lg-8 posts-list">
+                <!-- محتوا -->
+                <div class="col-lg-8 posts-list">
 
-                <div class="single-post row">
+                    <div class="single-post row">
 
-                    <div class="col-lg-12">
-                        {% if article.image %}
-                            <div class="feature-img">
-                                <img class="img-fluid" src="{{ article.image.url }}" alt="{{ article.title }}">
-                            </div>
-                        {% endif %}
-                    </div>
+                        <div class="col-lg-12">
+                            {% if article.image %}
+                                <div class="feature-img">
+                                    <img class="img-fluid" src="{{ article.image.url }}" alt="{{ article.title }}">
+                                </div>
+                            {% endif %}
+                        </div>
 
-                    <div class="col-lg-3 col-md-3">
-                        <div class="blog_info text-right">
+                        <div class="col-lg-3 col-md-3">
+                            <div class="blog_info text-right">
 
-                            <div class="post_tag">
-                                {% for tag in article.tags.all %}
-                                    <a href="#">{{ tag.title }}{% if not forloop.last %}، {% endif %}</a>
-                                {% empty %}
-                                    <span>بدون برچسب</span>
-                                {% endfor %}
-                            </div>
+                                <div class="post_tag">
+                                    {% for tag in article.tags.all %}
+                                        <a href="#">{{ tag.title }}{% if not forloop.last %}، {% endif %}</a>
+                                    {% empty %}
+                                        <span>بدون برچسب</span>
+                                    {% endfor %}
+                                </div>
 
-                            <ul class="blog_meta list">
-                                {% if article.author %}
+                                <ul class="blog_meta list">
+                                    {% if article.author %}
+                                        <li>
+                                            <a href="#">
+                                                <i class="lnr lnr-user"></i>
+                                                {{ article.author }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+
                                     <li>
                                         <a href="#">
-                                            <i class="lnr lnr-user"></i>
-                                            {{ article.author }}
+                                            <i class="lnr lnr-calendar-full"></i>
+                                            {{ article.created_date|date:"Y/m/d" }}
                                         </a>
                                     </li>
-                                {% endif %}
 
-                                <li>
-                                    <a href="#">
-                                        <i class="lnr lnr-calendar-full"></i>
-                                        {{ article.created_date|date:"Y/m/d" }}
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="lnr lnr-eye"></i>
+                                            {{ article.view_count }} مشاهده
+                                        </a>
+                                    </li>
+                                </ul>
 
-                                <li>
-                                    <a href="#">
-                                        <i class="lnr lnr-eye"></i>
-                                        {{ article.view_count }} مشاهده
-                                    </a>
-                                </li>
-                            </ul>
+                                <ul class="social-links">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-github"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                                </ul>
 
-                            <ul class="social-links">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-github"></i></a></li>
-                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                            </ul>
-
+                            </div>
                         </div>
+
+                        <div class="col-lg-9 col-md-9 blog_details">
+                            <h2>{{ article.title }}</h2>
+
+                            <p class="excert">
+                                {{ article.short_description }}
+                            </p>
+
+                            <p>
+                                {{ article.description|linebreaksbr }}
+                            </p>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="quotes">
+                                {{ article.short_description }}
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="col-lg-9 col-md-9 blog_details">
-                        <h2>{{ article.title }}</h2>
+                    <!-- نظرات -->
+                    <div class="comments-area">
+                        <h4>05 نظر</h4>
 
-                        <p class="excert">
-                            {{ article.short_description }}
-                        </p>
+                        <div class="comment-list">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="thumb">
+                                        <img src="{% static 'img/blog/c1.jpg' %}" alt="">
+                                    </div>
+                                    <div class="desc">
+                                        <h5><a href="#">نام کاربر</a></h5>
+                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
+                                        <p class="comment">
+                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="reply-btn">
+                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
+                                </div>
+                            </div>
+                        </div>
 
-                        <p>
-                            {{ article.description|linebreaksbr }}
-                        </p>
+                        <div class="comment-list left-padding">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="thumb">
+                                        <img src="{% static 'img/blog/c2.jpg' %}" alt="">
+                                    </div>
+                                    <div class="desc">
+                                        <h5><a href="#">نام کاربر</a></h5>
+                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
+                                        <p class="comment">
+                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="reply-btn">
+                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-list left-padding">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="thumb">
+                                        <img src="{% static 'img/blog/c3.jpg' %}" alt="">
+                                    </div>
+                                    <div class="desc">
+                                        <h5><a href="#">نام کاربر</a></h5>
+                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
+                                        <p class="comment">
+                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="reply-btn">
+                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-list">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="thumb">
+                                        <img src="{% static 'img/blog/c4.jpg' %}" alt="">
+                                    </div>
+                                    <div class="desc">
+                                        <h5><a href="#">نام کاربر</a></h5>
+                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
+                                        <p class="comment">
+                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="reply-btn">
+                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-list">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="thumb">
+                                        <img src="{% static 'img/blog/c5.jpg' %}" alt="">
+                                    </div>
+                                    <div class="desc">
+                                        <h5><a href="#">نام کاربر</a></h5>
+                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
+                                        <p class="comment">
+                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="reply-btn">
+                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="col-lg-12">
-                        <div class="quotes">
-                            {{ article.short_description }}
-                        </div>
-                    </div>
+                    <!-- فرم نظر -->
+                    <div class="comment-form">
+                        <h4>یک پاسخ بگذارید</h4>
 
-                </div>
-
-                <!-- نظرات -->
-                <div class="comments-area">
-                    <h4>05 نظر</h4>
-
-                    <div class="comment-list">
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="thumb">
-                                    <img src="{% static 'img/blog/c1.jpg' %}" alt="">
+                        <form>
+                            <div class="form-group form-inline">
+                                <div class="form-group col-lg-6 col-md-6 name">
+                                    <input type="text" class="form-control" id="name"
+                                           placeholder="نام شما">
                                 </div>
-                                <div class="desc">
-                                    <h5><a href="#">نام کاربر</a></h5>
-                                    <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                    <p class="comment">
-                                        هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                    </p>
+
+                                <div class="form-group col-lg-6 col-md-6 email">
+                                    <input type="email" class="form-control" id="email"
+                                           placeholder="ایمیل شما">
                                 </div>
                             </div>
-                            <div class="reply-btn">
-                                <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="comment-list left-padding">
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="thumb">
-                                    <img src="{% static 'img/blog/c2.jpg' %}" alt="">
-                                </div>
-                                <div class="desc">
-                                    <h5><a href="#">نام کاربر</a></h5>
-                                    <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                    <p class="comment">
-                                        هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="reply-btn">
-                                <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="comment-list left-padding">
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="thumb">
-                                    <img src="{% static 'img/blog/c3.jpg' %}" alt="">
-                                </div>
-                                <div class="desc">
-                                    <h5><a href="#">نام کاربر</a></h5>
-                                    <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                    <p class="comment">
-                                        هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="reply-btn">
-                                <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="comment-list">
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="thumb">
-                                    <img src="{% static 'img/blog/c4.jpg' %}" alt="">
-                                </div>
-                                <div class="desc">
-                                    <h5><a href="#">نام کاربر</a></h5>
-                                    <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                    <p class="comment">
-                                        هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="reply-btn">
-                                <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="comment-list">
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="thumb">
-                                    <img src="{% static 'img/blog/c5.jpg' %}" alt="">
-                                </div>
-                                <div class="desc">
-                                    <h5><a href="#">نام کاربر</a></h5>
-                                    <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                    <p class="comment">
-                                        هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="reply-btn">
-                                <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- فرم نظر -->
-                <div class="comment-form">
-                    <h4>یک پاسخ بگذارید</h4>
-
-                    <form>
-                        <div class="form-group form-inline">
-                            <div class="form-group col-lg-6 col-md-6 name">
-                                <input type="text" class="form-control" id="name"
-                                       placeholder="نام شما">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="subject"
+                                       placeholder="موضوع">
                             </div>
 
-                            <div class="form-group col-lg-6 col-md-6 email">
-                                <input type="email" class="form-control" id="email"
-                                       placeholder="ایمیل شما">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="subject"
-                                   placeholder="موضوع">
-                        </div>
-
-                        <div class="form-group">
+                            <div class="form-group">
                             <textarea class="form-control mb-10"
                                       rows="5"
                                       name="message"
                                       placeholder="متن نظر"
                                       required></textarea>
-                        </div>
+                            </div>
 
-                        <a href="#" class="primary-btn submit_btn">ارسال پاسخ</a>
-                    </form>
+                            <a href="#" class="primary-btn submit_btn">ارسال پاسخ</a>
+                        </form>
+                    </div>
+
                 </div>
+                <!-- پایان col-lg-8 -->
 
-            </div>
-            <!-- پایان col-lg-8 -->
-
-            <!-- سایدبار -->
-        <div class="col-lg-4">
+                <!-- سایدبار -->
+                <div class="col-lg-4">
                     <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget search_widget">
                             <div class="input-group">
@@ -301,12 +301,17 @@
                         </aside>
 
 
-                        <aside class="single_sidebar_widget ads_widget">
-                            <a href="#">
-                                <img class="img-fluid" src="{% static 'img/blog/add.jpg' %}" alt="">
-                            </a>
-                            <div class="br"></div>
-                        </aside>
+                        {% if site_banner %}
+                            <aside class="single_sidebar_widget ads_widget">
+                                <a href="{{ site_banner.url|default:'#' }}">
+                                    <img class="img-fluid"
+                                         src="{{ site_banner.image.url }}"
+                                         alt="{{ site_banner.title }}"
+                                         style="width:300px;height:400px;object-fit:cover;">
+                                </a>
+                                <div class="br"></div>
+                            </aside>
+                        {% endif %}
 
 
                         <aside class="single_sidebar_widget post_category_widget">
@@ -367,12 +372,12 @@
 
                     </div>
                 </div>
-            <!-- پایان سایدبار -->
+                <!-- پایان سایدبار -->
 
+            </div>
         </div>
-    </div>
-</section>
-<!--================Blog Area =================-->
+    </section>
+    <!--================Blog Area =================-->
 
 {% endblock %}
 ```

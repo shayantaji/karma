@@ -3,6 +3,8 @@ from django.views.generic import ListView, TemplateView, DetailView
 from product.models import Product, ProductCategory, ProductBrand
 from django.db.models import Count, Q, F, ExpressionWrapper, FloatField,Min,Max
 
+from site_config.models import SiteBanner
+
 
 # Create your views here.
 
@@ -120,6 +122,7 @@ class ProductListView(ListView):
         context['weekly_deals'] = Product.objects.filter(is_active=True,is_deleted=False,discount_percent__gt=0
         ).select_related('category','brand').prefetch_related('images').order_by('-discount_percent')[:9]
 
+        context['site_banner'] = SiteBanner.objects.filter(position=SiteBanner.SiteBannerPositions.PRODUCT_LIST,is_active=True).first()
 
         return context
 

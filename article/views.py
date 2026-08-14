@@ -1,6 +1,7 @@
 from django.db.models import Count, Q
 from django.views.generic import TemplateView, ListView, DetailView
 from article.models import Article, ArticleCategory, ArticleTag
+from site_config.models import SiteBanner
 
 
 # Create your views here.
@@ -41,6 +42,7 @@ class ArticleView(ListView):
         query_params.pop('page', None)
         context['query_params'] = query_params.urlencode()
 
+        context['site_banner'] = SiteBanner.objects.filter(position=SiteBanner.SiteBannerPositions.ARTICLE_LIST,is_active=True).first()
 
         return context
 
@@ -61,3 +63,10 @@ class ArticleSingleView(DetailView):
 
         return Article.objects.filter(is_active=True,is_deleted=False).select_related('category','author').prefetch_related('tags')
 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['site_banner'] = SiteBanner.objects.filter(position=SiteBanner.SiteBannerPositions.ARTICLE_DETAIL,is_active=True).first()
+
+        return context

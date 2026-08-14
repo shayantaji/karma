@@ -245,13 +245,17 @@ $(document).ready(function(){
       })
 
 
-
-    //----- Active No ui slider --------//
 $(function(){
     if(document.getElementById("price-range")){
         var nonLinearSlider=document.getElementById('price-range');
         var minPrice=priceRangeMin;
         var maxPrice=priceRangeMax;
+        var priceFilter=document.getElementById('price-filter');
+
+        var nodes=[
+            document.getElementById('lower-value'),
+            document.getElementById('upper-value')
+        ];
 
         if(maxPrice>minPrice){
             var selectedMin=selectedPriceMin;
@@ -271,11 +275,6 @@ $(function(){
                 }
             });
 
-            var nodes=[
-                document.getElementById('lower-value'),
-                document.getElementById('upper-value')
-            ];
-
             nonLinearSlider.noUiSlider.on('update',function(values,handle){
                 nodes[handle].innerHTML=Math.round(values[handle]).toLocaleString('en-US');
             });
@@ -287,11 +286,12 @@ $(function(){
                 url.searchParams.delete('page');
                 window.location.href=url.toString();
             });
+
+        } else {
+            priceFilter.style.display='none';
         }
     }
 });
-
-    //-------- Have Cupon Button Text Toggle Change -------//
 
     $('.have-btn').on('click', function(e){
         e.preventDefault();

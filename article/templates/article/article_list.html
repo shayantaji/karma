@@ -74,6 +74,8 @@
                                             <a href="?page=
 
 
+
+
                                                     {{ page_obj.previous_page_number }}{% if query_params %}&{{ query_params }}{% endif %}"
                                                class="page-link"
                                                aria-label="Previous">
@@ -97,6 +99,8 @@
                                     {% if page_obj.has_next %}
                                         <li class="page-item">
                                             <a href="?page=
+
+
 
 
                                                     {{ page_obj.next_page_number }}{% if query_params %}&{{ query_params }}{% endif %}"
@@ -165,13 +169,17 @@
                         </aside>
 
 
-                        <aside class="single_sidebar_widget ads_widget">
-                            <a href="#">
-                                <img class="img-fluid" src="{% static 'img/blog/add.jpg' %}" alt="">
-                            </a>
-                            <div class="br"></div>
-                        </aside>
-
+                        {% if site_banner %}
+                            <aside class="single_sidebar_widget ads_widget">
+                                <a href="{{ site_banner.url|default:'#' }}">
+                                    <img class="img-fluid"
+                                         src="{{ site_banner.image.url }}"
+                                         alt="{{ site_banner.title }}"
+                                         style="width:300px;height:400px;object-fit:cover;">
+                                </a>
+                                <div class="br"></div>
+                            </aside>
+                        {% endif %}
 
                         <aside class="single_sidebar_widget post_category_widget">
                             <h4 class="widget_title">دسته بندی</h4>

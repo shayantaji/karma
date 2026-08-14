@@ -21,6 +21,11 @@ class FooterKarmaGalleryAdmin(admin.ModelAdmin):
     inlines = [FooterKarmaGalleryListInline]
 
 
+class SiteBannerAdmin(admin.ModelAdmin):
+    list_display = ['title', 'url', 'position']
+
+
 
 admin.site.register(models.SiteSetting, SiteSettingAdmin)
 admin.site.register(models.FooterKarmaGallery,FooterKarmaGalleryAdmin)
+admin.site.register(models.SiteBanner, SiteBannerAdmin)

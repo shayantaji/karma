@@ -101,7 +101,7 @@
                     </div>
 
 
-                    <div class="common-filter">
+                    <div class="common-filter"  id="price-filter">
                         <div class="head">قیمت</div>
 
                         <div class="price-range-area">
@@ -118,6 +118,19 @@
                         </div>
                     </div>
                 </div>
+
+
+                        {% if site_banner %}
+                            <aside class="single_sidebar_widget ads_widget">
+                                <a href="{{ site_banner.url|default:'#' }}">
+                                    <img class="img-fluid"
+                                         src="{{ site_banner.image.url }}"
+                                         alt="{{ site_banner.title }}"
+                                         style="width:300px;height:400px;object-fit:cover;">
+                                </a>
+                                <div class="br"></div>
+                            </aside>
+                        {% endif %}
 
             </div>
             <!-- End Sidebar -->

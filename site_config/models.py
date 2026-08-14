@@ -67,3 +67,23 @@ class FooterKarmaGalleryList(models.Model):
     class Meta:
         verbose_name = 'تصویر'
         verbose_name_plural = 'گالری تصاویر'
+
+
+class SiteBanner(models.Model):
+    class SiteBannerPositions(models.TextChoices):
+        PRODUCT_LIST = 'product_list', 'صفحه لیست محصولات'
+        ARTICLE_LIST = 'article_list', 'لیست مقالات'
+        ARTICLE_DETAIL = 'article_detail', 'صفحه جزئیات مقالات'
+
+    title = models.CharField(max_length=200,verbose_name='عنوان بنر')
+    url = models.CharField(max_length=400,null=True,blank=True,verbose_name='آدرس بنر')
+    image = models.ImageField(upload_to='images/banners',verbose_name='تصویر بنر')
+    is_active = models.BooleanField(default=True,verbose_name='فعال / غیرفعال')
+    position = models.CharField(max_length=50,choices=SiteBannerPositions.choices,verbose_name='جایگاه نمایشی')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'بنر تبلیغاتی'
+        verbose_name_plural = 'بنرهای تبلیغاتی'
