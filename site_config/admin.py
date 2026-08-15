@@ -24,8 +24,11 @@ class FooterKarmaGalleryAdmin(admin.ModelAdmin):
 class SiteBannerAdmin(admin.ModelAdmin):
     list_display = ['title', 'url', 'position']
 
+class NewsletterSubscriberAdmin(admin.ModelAdmin):
+    list_display = ['email', 'is_active']
 
 
 admin.site.register(models.SiteSetting, SiteSettingAdmin)
 admin.site.register(models.FooterKarmaGallery,FooterKarmaGalleryAdmin)
 admin.site.register(models.SiteBanner, SiteBannerAdmin)
+admin.site.register(models.NewsletterSubscriber, NewsletterSubscriberAdmin)

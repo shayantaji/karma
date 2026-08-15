@@ -319,7 +319,8 @@
                             <ul class="list cat-list">
                                 {% for category in categories_sidebar %}
                                     <li>
-                                        <a href="?category={{ category.slug }}" class="d-flex justify-content-between">
+                                        <a href="{% url 'article_list' %}?category={{ category.slug }}"
+                                           class="d-flex justify-content-between">
                                             <p>{{ category.title }}</p>
                                             <p>{{ category.article_count }}</p>
                                         </a>
@@ -333,34 +334,16 @@
                             <div class="br"></div>
                         </aside>
 
-
-                        <aside class="single-sidebar-widget newsletter_widget">
-                            <h4 class="widget_title">خبرنامه</h4>
-                            <p>
-                                برای دریافت جدیدترین مقالات و مطالب مرتبط با تکنولوژی و محصولات دیجیتال عضو خبرنامه
-                                شوید.
-                            </p>
-                            <div class="form-group d-flex flex-row">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="ایمیل شما">
-                                </div>
-                                <a href="#" class="bbtns">عضویت</a>
-                            </div>
-                            <p class="text-bottom">می توانید در هر زمانی اشتراک خود را لغو کنید</p>
-                            <div class="br"></div>
-                        </aside>
+                        {% include 'includes/newslettersubscriber/newsleetersubscriber.html' %}
 
                         <aside class="single_sidebar_widget tag_cloud_widget">
                             <h4 class="widget_title">تگ ها</h4>
                             <ul class="list">
                                 {% for tag in tags %}
                                     <li>
-                                        <a href="#">{{ tag.title }}</a>
+                                        <a href="{% url 'article_list' %}?tag={{ tag.slug }}">
+                                            {{ tag.title }}
+                                        </a>
                                     </li>
                                 {% empty %}
                                     <li>

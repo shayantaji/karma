@@ -1,0 +1,40 @@
+<aside class="single_sidebar_widget newsletter_widget">
+    <h4 class="widget_title">خبرنامه</h4>
+
+    <p>
+        برای دریافت جدیدترین اخبار مقالات و محصولات فروشگاه کارما عضو خبرنامه شوید.
+    </p>
+
+    <form method="post" action="{% url 'newsletter_subscribe' %}" id="newsletter-form">
+        {% csrf_token %}
+
+        <div class="form-group d-flex flex-row">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="ایمیل شما"
+                       required>
+            </div>
+
+            <button type="submit" class="bbtns">
+                عضویت
+            </button>
+        </div>
+    </form>
+
+    <div class="newsletter-message"></div>
+
+
+{#    <p class="text-bottom">#}
+{#        می توانید در هر زمانی اشتراک خود را لغو کنید#}
+{#    </p>#}
+
+    <div class="br"></div>
+</aside>

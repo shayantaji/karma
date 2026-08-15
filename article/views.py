@@ -21,6 +21,11 @@ class ArticleView(ListView):
         if category:
             queryset = queryset.filter(category__slug=category)
 
+        tag = self.request.GET.get('tag')
+
+        if tag:
+            queryset = queryset.filter(tags__slug=tag)
+
         return queryset
 
 
@@ -68,5 +73,13 @@ class ArticleSingleView(DetailView):
         context = super().get_context_data(**kwargs)
 
         context['site_banner'] = SiteBanner.objects.filter(position=SiteBanner.SiteBannerPositions.ARTICLE_DETAIL,is_active=True).first()
+
+        context['popular_articles'] = Article.objects.filter(is_active=True, is_deleted=False).order_by('-view_count')[:4]
+
+
+        context['categories_sidebar'] = ArticleCategory.objects.filter(is_active=True).annotate(article_count=Count('articles'
+        ,filter=Q(articles__is_active=True,articles__is_deleted=False))).order_by('-article_count')[:8]
+
+        context['tags'] = ArticleTag.objects.filter(is_active=True)[:10]
 
         return context
