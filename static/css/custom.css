@@ -429,3 +429,112 @@ input.is-invalid {
     background: #f8d7da;
     border: 1px solid #f5c6cb;
 }
+
+#newsletter-form input[type="email"] {
+    color: #333 !important;
+    font-weight: 500;
+}
+
+#newsletter-form input[type="email"]::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+
+.banner-product-image {
+    width: 480px;
+    height: 420px;
+    background: #fff;
+    border-radius: 30px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.10);
+}
+
+.banner-area .text-center {
+    padding-top: 40px;
+}
+
+.banner-area .text-center h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.active-banner-slider {
+    position: relative;
+}
+
+.active-banner-slider .owl-nav {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100% !important;
+    height: 0 !important;
+    display: block !important;
+    margin: 0 !important;
+    pointer-events: none;
+}
+
+.active-banner-slider .owl-prev,
+.active-banner-slider .owl-next {
+    position: absolute !important;
+    top: 0 !important;
+    display: block !important;
+    width: 40px !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    pointer-events: auto;
+}
+
+.active-banner-slider .owl-prev {
+    right: -50px !important;
+}
+
+.active-banner-slider .owl-next {
+    left: -50px !important;
+}
+
+.active-banner-slider .owl-prev img,
+.active-banner-slider .owl-next img {
+    width: 30px !important;
+    height: 30px !important;
+    display: block !important;
+    filter: brightness(0) !important;
+}
+
+.category-area .single-deal img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.category-area > .container > .row > .col-lg-4 > .single-deal img {
+    height: 510px;
+}
+
+@media (max-width: 991px) {
+    .category-area .single-deal img {
+        height: 250px;
+    }
+
+    .category-area > .container > .row > .col-lg-4 > .single-deal img {
+        height: 350px;
+    }
+}
+
+@media (max-width: 575px) {
+    .category-area .single-deal img,
+    .category-area > .container > .row > .col-lg-4 > .single-deal img {
+        height: 250px;
+    }
+}
+.category-area > .container > .row > .col-lg-4 > .single-deal img {
+    height: 470px;
+}

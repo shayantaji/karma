@@ -1,32 +1,31 @@
+$(document).ready(function () {
+    "use strict";
 
-$(document).ready(function(){
-	"use strict";
-
-	var window_width 	 = $(window).width(),
-	window_height 		 = window.innerHeight,
-	header_height 		 = $(".default-header").height(),
-	header_height_static = $(".site-header.static").outerHeight(),
-	fitscreen 			 = window_height - header_height;
+    var window_width = $(window).width(),
+        window_height = window.innerHeight,
+        header_height = $(".default-header").height(),
+        header_height_static = $(".site-header.static").outerHeight(),
+        fitscreen = window_height - header_height;
 
 
-	$(".fullscreen").css("height", window_height)
+    $(".fullscreen").css("height", window_height)
     $(".fitscreen").css("height", fitscreen);
 
-  //------- Active Nice Select --------//
+    //------- Active Nice Select --------//
 
     $('select').niceSelect();
 
 
-    $('.navbar-nav li.dropdown').hover(function() {
-    $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
-    }, function() {
-    $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+    $('.navbar-nav li.dropdown').hover(function () {
+        $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+    }, function () {
+        $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
     });
 
     $('.img-pop-up').magnificPopup({
         type: 'image',
-        gallery:{
-        enabled:true
+        gallery: {
+            enabled: true
         }
     });
 
@@ -43,152 +42,146 @@ $(document).ready(function(){
     /*==========================
 		javaScript for sticky header
 		============================*/
-			$(".sticky-header").sticky();
+    $(".sticky-header").sticky();
 
     /*=================================
     Javascript for banner area carousel
     ==================================*/
     $(".active-banner-slider").owlCarousel({
-        items:1,
-        autoplay:false,
+        items: 1,
+        autoplay: false,
         autoplayTimeout: 5000,
-        loop:true,
-        nav:true,
-        navText:["<img src='static/img/banner/next.png'>","<img src='static/img/banner/prev.png'>"],
-        dots:false,
-        rtl:true
+        loop: true,
+        nav: false,
+        dots: false,
+        rtl: true
     });
-
     /*=================================
     Javascript for product area carousel
     ==================================*/
-    $(".active-product-area").owlCarousel({
-        items:1,
-        autoplay:false,
+    $(".active-banner-slider").owlCarousel({
+        items: 1,
+        autoplay: false,
         autoplayTimeout: 5000,
-        loop:true,
-        nav:true,
-        navText:["<img src='static/img/product/next.png'>","<img src='static/img/product/prev.png'>"],
-        dots:false,
-        rtl:true
+        loop: true,
+        nav: false,
+        dots: false,
+        rtl: true
     });
-
     /*=================================
     Javascript for single product area carousel
     ==================================*/
     $(".s_Product_carousel").owlCarousel({
-      items:1,
-      autoplay:false,
-      autoplayTimeout: 5000,
-      loop:true,
-      nav:false,
-      dots:true,
-      rtl:true
+        items: 1,
+        autoplay: false,
+        autoplayTimeout: 5000,
+        loop: true,
+        nav: false,
+        dots: true,
+        rtl: true
     });
-    
+
     /*=================================
     Javascript for exclusive area carousel
     ==================================*/
     $(".active-exclusive-product-slider").owlCarousel({
-        items:1,
-        autoplay:false,
+        items: 1,
+        autoplay: false,
         autoplayTimeout: 5000,
-        loop:true,
-        nav:true,
-        navText:["<img src='static/img/product/next.png'>","<img src='static/img/product/prev.png'>"],
-        dots:false,
-        rtl:true
+        loop: true,
+        nav: true,
+        navText: ["<img src='static/img/product/next.png'>", "<img src='static/img/product/prev.png'>"],
+        dots: false,
+        rtl: true
     });
 
     //--------- Accordion Icon Change ---------//
 
-    $('.collapse').on('shown.bs.collapse', function(){
+    $('.collapse').on('shown.bs.collapse', function () {
         $(this).parent().find(".lnr-arrow-right").removeClass("lnr-arrow-right").addClass("lnr-arrow-left");
-    }).on('hidden.bs.collapse', function(){
+    }).on('hidden.bs.collapse', function () {
         $(this).parent().find(".lnr-arrow-left").removeClass("lnr-arrow-left").addClass("lnr-arrow-right");
     });
 
-  // Select all links with hashes
-  $('.main-menubar a[href*="#"]')
-    // Remove links that don't actually link to anything
-    .not('[href="#"]')
-    .not('[href="#0"]')
-    .click(function(event) {
-      // On-page links
-      if (
-        location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
-        && 
-        location.hostname == this.hostname
-      ) {
-        // Figure out element to scroll to
-        var target = $(this.hash);
-        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-        // Does a scroll target exist?
-        if (target.length) {
-          // Only prevent default if animation is actually gonna happen
-          event.preventDefault();
-          $('html, body').animate({
-            scrollTop: target.offset().top-70
-          }, 1000, function() {
-            // Callback after animation
-            // Must change focus!
-            var $target = $(target);
-            $target.focus();
-            if ($target.is(":focus")) { // Checking if the target was focused
-              return false;
-            } else {
-              $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
-              $target.focus(); // Set focus again
-            };
-          });
-        }
-      }
-    });
-
-
-
-      // -------   Mail Send ajax
-
-         $(document).ready(function() {
-            var form = $('#booking'); // contact form
-            var submit = $('.submit-btn'); // submit button
-            var alert = $('.alert-msg'); // alert div for show alert message
-
-            // form submit event
-            form.on('submit', function(e) {
-                e.preventDefault(); // prevent default form submit
-
-                $.ajax({
-                    url: 'booking.php', // form action url
-                    type: 'POST', // form submit method get/post
-                    dataType: 'html', // request type html/json/xml
-                    data: form.serialize(), // serialize form data
-                    beforeSend: function() {
-                        alert.fadeOut();
-                        submit.html('Sending....'); // change submit button text
-                    },
-                    success: function(data) {
-                        alert.html(data).fadeIn(); // fade in response data
-                        form.trigger('reset'); // reset form
-                        submit.attr("style", "display: none !important");; // reset submit button text
-                    },
-                    error: function(e) {
-                        console.log(e)
-                    }
-                });
-            });
+    // Select all links with hashes
+    $('.main-menubar a[href*="#"]')
+        // Remove links that don't actually link to anything
+        .not('[href="#"]')
+        .not('[href="#0"]')
+        .click(function (event) {
+            // On-page links
+            if (
+                location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                &&
+                location.hostname == this.hostname
+            ) {
+                // Figure out element to scroll to
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                // Does a scroll target exist?
+                if (target.length) {
+                    // Only prevent default if animation is actually gonna happen
+                    event.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - 70
+                    }, 1000, function () {
+                        // Callback after animation
+                        // Must change focus!
+                        var $target = $(target);
+                        $target.focus();
+                        if ($target.is(":focus")) { // Checking if the target was focused
+                            return false;
+                        } else {
+                            $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+                            $target.focus(); // Set focus again
+                        }
+                        ;
+                    });
+                }
+            }
         });
 
 
+    // -------   Mail Send ajax
+
+    $(document).ready(function () {
+        var form = $('#booking'); // contact form
+        var submit = $('.submit-btn'); // submit button
+        var alert = $('.alert-msg'); // alert div for show alert message
+
+        // form submit event
+        form.on('submit', function (e) {
+            e.preventDefault(); // prevent default form submit
+
+            $.ajax({
+                url: 'booking.php', // form action url
+                type: 'POST', // form submit method get/post
+                dataType: 'html', // request type html/json/xml
+                data: form.serialize(), // serialize form data
+                beforeSend: function () {
+                    alert.fadeOut();
+                    submit.html('Sending....'); // change submit button text
+                },
+                success: function (data) {
+                    alert.html(data).fadeIn(); // fade in response data
+                    form.trigger('reset'); // reset form
+                    submit.attr("style", "display: none !important");
+                    ; // reset submit button text
+                },
+                error: function (e) {
+                    console.log(e)
+                }
+            });
+        });
+    });
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#mc_embed_signup').find('form').ajaxChimp();
-    });   
+    });
 
 
-
-     if(document.getElementById("js-countdown")){
+    if (document.getElementById("js-countdown")) {
 
         var countdown = new Date("October 17, 2018");
 
@@ -199,12 +192,12 @@ $(document).ready(function(){
             var hours = Math.floor(milliseconds / (1000 * 60 * 60) % 24);
             var days = Math.floor(milliseconds / (1000 * 60 * 60 * 24));
 
-        return {
-            'total': milliseconds,
-            'seconds': seconds,
-            'minutes': minutes,
-            'hours': hours,
-            'days': days
+            return {
+                'total': milliseconds,
+                'seconds': seconds,
+                'minutes': minutes,
+                'hours': hours,
+                'days': days
             };
         }
 
@@ -215,17 +208,17 @@ $(document).ready(function(){
             var minutesItem = counter.querySelector('.js-countdown-minutes');
             var secondsItem = counter.querySelector('.js-countdown-seconds');
 
-        function updateClock() {
-            var time = getRemainingTime(endtime);
+            function updateClock() {
+                var time = getRemainingTime(endtime);
 
-            daysItem.innerHTML = time.days;
-            hoursItem.innerHTML = ('0' + time.hours).slice(-2);
-            minutesItem.innerHTML = ('0' + time.minutes).slice(-2);
-            secondsItem.innerHTML = ('0' + time.seconds).slice(-2);
+                daysItem.innerHTML = time.days;
+                hoursItem.innerHTML = ('0' + time.hours).slice(-2);
+                minutesItem.innerHTML = ('0' + time.minutes).slice(-2);
+                secondsItem.innerHTML = ('0' + time.seconds).slice(-2);
 
-            if (time.total <= 0) {
-              clearInterval(timeinterval);
-            }
+                if (time.total <= 0) {
+                    clearInterval(timeinterval);
+                }
             }
 
             updateClock();
@@ -234,86 +227,81 @@ $(document).ready(function(){
 
         initClock('js-countdown', countdown);
 
-  };
-
-
-
-      $('.quick-view-carousel-details').owlCarousel({
-          loop: true,
-          dots: true,
-          items: 1,
-      })
-
-
-$(function(){
-    if(document.getElementById("price-range")){
-        var nonLinearSlider=document.getElementById('price-range');
-        var minPrice=priceRangeMin;
-        var maxPrice=priceRangeMax;
-        var priceFilter=document.getElementById('price-filter');
-
-        var nodes=[
-            document.getElementById('lower-value'),
-            document.getElementById('upper-value')
-        ];
-
-        if(maxPrice>minPrice){
-            var selectedMin=selectedPriceMin;
-            var selectedMax=selectedPriceMax;
-
-            var startMin=selectedMin>0?selectedMin:minPrice;
-            var startMax=selectedMax>0?selectedMax:maxPrice;
-
-            noUiSlider.create(nonLinearSlider,{
-                connect:true,
-                behaviour:'tap',
-                start:[startMin,startMax],
-                step:5000000,
-                range:{
-                    'min':minPrice,
-                    'max':maxPrice
-                }
-            });
-
-            nonLinearSlider.noUiSlider.on('update',function(values,handle){
-                nodes[handle].innerHTML=Math.round(values[handle]).toLocaleString('en-US');
-            });
-
-            nonLinearSlider.noUiSlider.on('change',function(values){
-                var url=new URL(window.location.href);
-                url.searchParams.set('min_price',Math.round(values[0]));
-                url.searchParams.set('max_price',Math.round(values[1]));
-                url.searchParams.delete('page');
-                window.location.href=url.toString();
-            });
-
-        } else {
-            priceFilter.style.display='none';
-        }
     }
-});
+    ;
 
-    $('.have-btn').on('click', function(e){
+
+    $('.quick-view-carousel-details').owlCarousel({
+        loop: true,
+        dots: true,
+        items: 1,
+    })
+
+
+    $(function () {
+        if (document.getElementById("price-range")) {
+            var nonLinearSlider = document.getElementById('price-range');
+            var minPrice = priceRangeMin;
+            var maxPrice = priceRangeMax;
+            var priceFilter = document.getElementById('price-filter');
+
+            var nodes = [
+                document.getElementById('lower-value'),
+                document.getElementById('upper-value')
+            ];
+
+            if (maxPrice > minPrice) {
+                var selectedMin = selectedPriceMin;
+                var selectedMax = selectedPriceMax;
+
+                var startMin = selectedMin > 0 ? selectedMin : minPrice;
+                var startMax = selectedMax > 0 ? selectedMax : maxPrice;
+
+                noUiSlider.create(nonLinearSlider, {
+                    connect: true,
+                    behaviour: 'tap',
+                    start: [startMin, startMax],
+                    step: 5000000,
+                    range: {
+                        'min': minPrice,
+                        'max': maxPrice
+                    }
+                });
+
+                nonLinearSlider.noUiSlider.on('update', function (values, handle) {
+                    nodes[handle].innerHTML = Math.round(values[handle]).toLocaleString('en-US');
+                });
+
+                nonLinearSlider.noUiSlider.on('change', function (values) {
+                    var url = new URL(window.location.href);
+                    url.searchParams.set('min_price', Math.round(values[0]));
+                    url.searchParams.set('max_price', Math.round(values[1]));
+                    url.searchParams.delete('page');
+                    window.location.href = url.toString();
+                });
+
+            } else {
+                priceFilter.style.display = 'none';
+            }
+        }
+    });
+
+    $('.have-btn').on('click', function (e) {
         e.preventDefault();
-        $('.have-btn span').text(function(i, text){
-          return text === "Have a Coupon?" ? "Close Coupon" : "Have a Coupon?";
+        $('.have-btn span').text(function (i, text) {
+            return text === "Have a Coupon?" ? "Close Coupon" : "Have a Coupon?";
         })
         $('.cupon-code').fadeToggle("slow");
     });
 
-    $('.load-more-btn').on('click', function(e){
+    $('.load-more-btn').on('click', function (e) {
         e.preventDefault();
         $('.load-product').fadeIn('slow');
         $(this).fadeOut();
     });
-    
 
 
-
-
-  //------- Start Quantity Increase & Decrease Value --------//
-
-
+    //------- Start Quantity Increase & Decrease Value --------//
 
 
     var value,
@@ -323,12 +311,16 @@ $(function(){
         var quantityAmount = quantityContainer.getElementsByClassName('quantity-amount')[0];
         var increase = quantityContainer.getElementsByClassName('increase')[0];
         var decrease = quantityContainer.getElementsByClassName('decrease')[0];
-        increase.addEventListener('click', function () { increaseValue(quantityAmount); });
-        decrease.addEventListener('click', function () { decreaseValue(quantityAmount); });
+        increase.addEventListener('click', function () {
+            increaseValue(quantityAmount);
+        });
+        decrease.addEventListener('click', function () {
+            decreaseValue(quantityAmount);
+        });
     }
 
     function init() {
-        for (var i = 0; i < quantity.length; i++ ) {
+        for (var i = 0; i < quantity.length; i++) {
             createBindings(quantity[i]);
         }
     };
@@ -352,13 +344,13 @@ $(function(){
         quantityAmount.value = value;
     }
 
-  init();
+    init();
 
 //------- End Quantity Increase & Decrease Value --------//
 
-  /*----------------------------------------------------*/
-  /*  Google map js
     /*----------------------------------------------------*/
+    /*  Google map js
+      /*----------------------------------------------------*/
 
     if ($("#mapBox").length) {
         var $lat = $("#mapBox").data("lat");
@@ -369,205 +361,203 @@ $(function(){
         var $markerLat = $("#mapBox").data("mlat");
         var $markerLon = $("#mapBox").data("mlon");
         var map = new GMaps({
-          el: "#mapBox",
-          lat: $lat,
-          lng: $lon,
-          scrollwheel: false,
-          scaleControl: true,
-          streetViewControl: false,
-          panControl: true,
-          disableDoubleClickZoom: true,
-          mapTypeControl: false,
-          zoom: $zoom,
-          styles: [
-            {
-              featureType: "water",
-              elementType: "geometry.fill",
-              stylers: [
+            el: "#mapBox",
+            lat: $lat,
+            lng: $lon,
+            scrollwheel: false,
+            scaleControl: true,
+            streetViewControl: false,
+            panControl: true,
+            disableDoubleClickZoom: true,
+            mapTypeControl: false,
+            zoom: $zoom,
+            styles: [
                 {
-                  color: "#dcdfe6"
-                }
-              ]
-            },
-            {
-              featureType: "transit",
-              stylers: [
-                {
-                  color: "#808080"
+                    featureType: "water",
+                    elementType: "geometry.fill",
+                    stylers: [
+                        {
+                            color: "#dcdfe6"
+                        }
+                    ]
                 },
                 {
-                  visibility: "off"
-                }
-              ]
-            },
-            {
-              featureType: "road.highway",
-              elementType: "geometry.stroke",
-              stylers: [
-                {
-                  visibility: "on"
+                    featureType: "transit",
+                    stylers: [
+                        {
+                            color: "#808080"
+                        },
+                        {
+                            visibility: "off"
+                        }
+                    ]
                 },
                 {
-                  color: "#dcdfe6"
-                }
-              ]
-            },
-            {
-              featureType: "road.highway",
-              elementType: "geometry.fill",
-              stylers: [
-                {
-                  color: "#ffffff"
-                }
-              ]
-            },
-            {
-              featureType: "road.local",
-              elementType: "geometry.fill",
-              stylers: [
-                {
-                  visibility: "on"
+                    featureType: "road.highway",
+                    elementType: "geometry.stroke",
+                    stylers: [
+                        {
+                            visibility: "on"
+                        },
+                        {
+                            color: "#dcdfe6"
+                        }
+                    ]
                 },
                 {
-                  color: "#ffffff"
+                    featureType: "road.highway",
+                    elementType: "geometry.fill",
+                    stylers: [
+                        {
+                            color: "#ffffff"
+                        }
+                    ]
                 },
                 {
-                  weight: 1.8
-                }
-              ]
-            },
-            {
-              featureType: "road.local",
-              elementType: "geometry.stroke",
-              stylers: [
-                {
-                  color: "#d7d7d7"
-                }
-              ]
-            },
-            {
-              featureType: "poi",
-              elementType: "geometry.fill",
-              stylers: [
-                {
-                  visibility: "on"
+                    featureType: "road.local",
+                    elementType: "geometry.fill",
+                    stylers: [
+                        {
+                            visibility: "on"
+                        },
+                        {
+                            color: "#ffffff"
+                        },
+                        {
+                            weight: 1.8
+                        }
+                    ]
                 },
                 {
-                  color: "#ebebeb"
-                }
-              ]
-            },
-            {
-              featureType: "administrative",
-              elementType: "geometry",
-              stylers: [
-                {
-                  color: "#a7a7a7"
-                }
-              ]
-            },
-            {
-              featureType: "road.arterial",
-              elementType: "geometry.fill",
-              stylers: [
-                {
-                  color: "#ffffff"
-                }
-              ]
-            },
-            {
-              featureType: "road.arterial",
-              elementType: "geometry.fill",
-              stylers: [
-                {
-                  color: "#ffffff"
-                }
-              ]
-            },
-            {
-              featureType: "landscape",
-              elementType: "geometry.fill",
-              stylers: [
-                {
-                  visibility: "on"
+                    featureType: "road.local",
+                    elementType: "geometry.stroke",
+                    stylers: [
+                        {
+                            color: "#d7d7d7"
+                        }
+                    ]
                 },
                 {
-                  color: "#efefef"
-                }
-              ]
-            },
-            {
-              featureType: "road",
-              elementType: "labels.text.fill",
-              stylers: [
-                {
-                  color: "#696969"
-                }
-              ]
-            },
-            {
-              featureType: "administrative",
-              elementType: "labels.text.fill",
-              stylers: [
-                {
-                  visibility: "on"
+                    featureType: "poi",
+                    elementType: "geometry.fill",
+                    stylers: [
+                        {
+                            visibility: "on"
+                        },
+                        {
+                            color: "#ebebeb"
+                        }
+                    ]
                 },
                 {
-                  color: "#737373"
-                }
-              ]
-            },
-            {
-              featureType: "poi",
-              elementType: "labels.icon",
-              stylers: [
+                    featureType: "administrative",
+                    elementType: "geometry",
+                    stylers: [
+                        {
+                            color: "#a7a7a7"
+                        }
+                    ]
+                },
                 {
-                  visibility: "off"
-                }
-              ]
-            },
-            {
-              featureType: "poi",
-              elementType: "labels",
-              stylers: [
+                    featureType: "road.arterial",
+                    elementType: "geometry.fill",
+                    stylers: [
+                        {
+                            color: "#ffffff"
+                        }
+                    ]
+                },
                 {
-                  visibility: "off"
-                }
-              ]
-            },
-            {
-              featureType: "road.arterial",
-              elementType: "geometry.stroke",
-              stylers: [
+                    featureType: "road.arterial",
+                    elementType: "geometry.fill",
+                    stylers: [
+                        {
+                            color: "#ffffff"
+                        }
+                    ]
+                },
                 {
-                  color: "#d6d6d6"
-                }
-              ]
-            },
-            {
-              featureType: "road",
-              elementType: "labels.icon",
-              stylers: [
+                    featureType: "landscape",
+                    elementType: "geometry.fill",
+                    stylers: [
+                        {
+                            visibility: "on"
+                        },
+                        {
+                            color: "#efefef"
+                        }
+                    ]
+                },
                 {
-                  visibility: "off"
-                }
-              ]
-            },
-            {},
-            {
-              featureType: "poi",
-              elementType: "geometry.fill",
-              stylers: [
+                    featureType: "road",
+                    elementType: "labels.text.fill",
+                    stylers: [
+                        {
+                            color: "#696969"
+                        }
+                    ]
+                },
                 {
-                  color: "#dadada"
+                    featureType: "administrative",
+                    elementType: "labels.text.fill",
+                    stylers: [
+                        {
+                            visibility: "on"
+                        },
+                        {
+                            color: "#737373"
+                        }
+                    ]
+                },
+                {
+                    featureType: "poi",
+                    elementType: "labels.icon",
+                    stylers: [
+                        {
+                            visibility: "off"
+                        }
+                    ]
+                },
+                {
+                    featureType: "poi",
+                    elementType: "labels",
+                    stylers: [
+                        {
+                            visibility: "off"
+                        }
+                    ]
+                },
+                {
+                    featureType: "road.arterial",
+                    elementType: "geometry.stroke",
+                    stylers: [
+                        {
+                            color: "#d6d6d6"
+                        }
+                    ]
+                },
+                {
+                    featureType: "road",
+                    elementType: "labels.icon",
+                    stylers: [
+                        {
+                            visibility: "off"
+                        }
+                    ]
+                },
+                {},
+                {
+                    featureType: "poi",
+                    elementType: "geometry.fill",
+                    stylers: [
+                        {
+                            color: "#dadada"
+                        }
+                    ]
                 }
-              ]
-            }
-          ]
+            ]
         });
-      }
+    }
 
 
-  
-
- });
+});
