@@ -100,3 +100,53 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.addEventListener('submit', function (e) {
+
+        if (!e.target.matches('#contactForm')) {
+            return;
+        }
+
+        e.preventDefault();
+
+        const form = e.target;
+        const messageBox = document.getElementById('contact-message');
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            messageBox.className = 'contact-message ' + data.type;
+            messageBox.textContent = data.message;
+
+            if (data.type === 'success') {
+                form.reset();
+            }
+
+            messageBox.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+        })
+        .catch(error => {
+
+            console.error('Contact Error:', error);
+
+            messageBox.className = 'contact-message error';
+            messageBox.textContent = 'خطایی رخ داد. لطفاً دوباره تلاش کنید.';
+
+        });
+
+    });
+
+});
