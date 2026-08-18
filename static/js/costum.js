@@ -150,3 +150,378 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+$(document).on('click', '.reply-comment', function (e) {
+
+    e.preventDefault();
+
+
+    let commentId = $(this).data('comment-id');
+
+
+    $('#parent-id').val(commentId);
+
+
+    $('#product-comment-form-title')
+        .text('پاسخ به نظر');
+
+
+    $('#product-comment-submit')
+        .text('ارسال پاسخ');
+
+
+    $('#cancel-reply').show();
+
+
+    $('#product-comment-form')[0].scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+
+
+});
+
+
+$(document).on('click', '#cancel-reply', function () {
+
+
+    $('#parent-id').val('');
+
+
+    $('#comment-form-title').text('ارسال نظر');
+
+
+    $('#comment-submit').text('ارسال نظر');
+
+
+    $('#cancel-reply').hide();
+
+
+});
+
+
+
+
+// Article Comment
+
+$(document).on('submit', '#article-comment-form', function (e) {
+
+    e.preventDefault();
+
+
+    let form = $(this);
+
+    let submit = $('#comment-submit');
+
+    let messageBox = $('#comment-message');
+
+
+    submit.prop('disabled', true);
+
+
+
+    $.ajax({
+
+        url: articleCommentUrl,
+
+        type: 'POST',
+
+        data: form.serialize(),
+
+
+        success:function(response){
+
+
+            messageBox.html(
+                '<div class="alert alert-success">'+
+                response.message+
+                '</div>'
+            );
+
+
+            form[0].reset();
+
+
+            $('#parent-id').val('');
+
+
+            $('#comment-form-title').text('یک نظر بگذارید');
+
+
+            submit.text('ارسال نظر');
+
+
+            $('#cancel-reply').hide();
+
+
+
+            setTimeout(function(){
+
+                location.reload();
+
+            },700);
+
+
+
+        },
+
+
+        error:function(xhr){
+
+
+            let message='خطایی رخ داد.';
+
+
+            if(xhr.responseJSON && xhr.responseJSON.message){
+
+                message=xhr.responseJSON.message;
+
+            }
+
+
+
+            messageBox.html(
+                '<div class="alert alert-danger">'+
+                message+
+                '</div>'
+            );
+
+
+        },
+
+
+        complete:function(){
+
+            submit.prop('disabled',false);
+
+        }
+
+
+    });
+
+
+});
+
+
+
+
+
+// Product Load More Comments
+
+
+$(document).on('click','#load-more-comments',function(){
+
+
+    let btn=$(this);
+
+
+    let page=parseInt(btn.attr('data-page'))+1;
+
+
+    let url=btn.data('url');
+
+
+
+    btn.prop('disabled',true);
+
+
+    btn.text('در حال بارگذاری...');
+
+
+
+    $.ajax({
+
+
+        url:url,
+
+        type:'GET',
+
+
+        data:{
+            page:page
+        },
+
+
+        success:function(response){
+
+
+            $('#comments-list').append(response.html);
+
+
+            btn.attr('data-page',page);
+
+
+
+            if(!response.has_next){
+
+
+                btn.remove();
+
+
+            }else{
+
+
+                btn.prop('disabled',false);
+
+
+                btn.text('نمایش نظرات بیشتر');
+
+
+            }
+
+
+        },
+
+
+        error:function(){
+
+
+            btn.prop('disabled',false);
+
+
+            btn.text('نمایش نظرات بیشتر');
+
+
+            alert('خطا در دریافت نظرات');
+
+
+        }
+
+
+    });
+
+
+});
+
+
+
+
+
+// Product Comment
+
+$(document).on('submit','#product-comment-form',function(e){
+
+    e.preventDefault();
+
+
+    let form=$(this);
+
+    let submit=$('#product-comment-submit');
+
+    let messageBox=$('#product-comment-message');
+
+
+    submit.prop('disabled',true);
+
+
+
+    $.ajax({
+
+        url:productCommentUrl,
+
+        type:'POST',
+
+        data:form.serialize(),
+
+
+        success:function(response){
+
+
+            messageBox.html(
+
+                '<div class="alert alert-success">'+
+                response.message+
+                '</div>'
+
+            );
+
+
+            form[0].reset();
+
+
+            $('#parent-id').val('');
+
+
+            $('#product-comment-form-title')
+                .text('ارسال نظر');
+
+
+            $('#product-comment-submit')
+                .text('ارسال نظر');
+
+
+            $('#cancel-reply').hide();
+
+
+
+            setTimeout(function(){
+
+                location.reload();
+
+            },700);
+
+
+
+        },
+
+
+        error:function(xhr){
+
+
+            let message='خطایی رخ داد';
+
+
+
+            if(xhr.responseJSON && xhr.responseJSON.message){
+
+                message=xhr.responseJSON.message;
+
+            }
+
+
+
+            messageBox.html(
+
+                '<div class="alert alert-danger">'+
+                message+
+                '</div>'
+
+            );
+
+
+        },
+
+
+        complete:function(){
+
+
+            submit.prop('disabled',false);
+
+
+        }
+
+
+    });
+
+
+});
+
+document.querySelectorAll('.reply-comment').forEach(button => {
+
+    button.addEventListener('click',function(e){
+
+        e.preventDefault();
+
+        let commentId = this.dataset.commentId;
+
+        document.getElementById('parent-id').value = commentId;
+
+        document.getElementById('comment-form-title').innerText =
+        "پاسخ به نظر";
+
+        document.getElementById('product-comment-form')
+        .scrollIntoView();
+
+    });
+
+});

@@ -75,3 +75,27 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         return reverse('article_single', args=[self.slug])
+
+class ArticleComment(models.Model):
+
+    article = models.ForeignKey(Article,on_delete=models.CASCADE,related_name='comments',verbose_name='مقاله')
+
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='article_comments',verbose_name='کاربر')
+
+    parent = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True,related_name='replies',verbose_name='پاسخ فرزند')
+
+    text = models.TextField(verbose_name='متن نظر')
+
+    is_approved = models.BooleanField(default=True,verbose_name='تایید شده')
+
+    created_date = models.DateTimeField(auto_now_add=True ,verbose_name='تاریخ کامنت')
+
+    updated_date = models.DateTimeField(auto_now=True,verbose_name='تاریخ بروزرسانی')
+
+    class Meta:
+        ordering = ['created_date']
+        verbose_name = 'نظر مقاله'
+        verbose_name_plural = 'نظرات مقاله'
+
+    def __str__(self):
+        return f'{self.user} - {self.article}'

@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 from slugify import slugify
 
+from account_module.models import User
+
 
 class ProductCategory(models.Model):
     title = models.CharField(max_length=200)
@@ -138,3 +140,22 @@ class ProductSpecification(models.Model):
 
     def __str__(self):
         return f"{self.product.title} - {self.key}"
+
+class ProductComment(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='comments',verbose_name='محصول')
+
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='product_comments',verbose_name='کابر')
+
+    parent = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True,related_name='replies',verbose_name='فرزند')
+
+    text = models.TextField(verbose_name='متن پیام')
+
+    is_approved = models.BooleanField(default=True,verbose_name='تایید/عدم تایید')
+
+    created_date = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ نظر')
+
+    class Meta:
+        verbose_name = "نظرات محصول"
+        verbose_name_plural = "نظرات محصولات"
+        ordering = ['created_date']
+

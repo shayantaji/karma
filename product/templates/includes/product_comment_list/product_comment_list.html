@@ -1,0 +1,137 @@
+{% load static %}
+
+{% for comment in comments %}
+
+    <div class="review_item"
+         data-comment-id="{{ comment.id }}">
+
+        <div class="media">
+
+            <div class="d-flex">
+
+                {% if comment.user.avatar %}
+                    <img src="{{ comment.user.avatar.url }}"
+                         alt="{{ comment.user.username }}"
+                         width="60"
+                         height="60">
+                {% else %}
+                    <img src="{% static 'img/default-avatar.jpg' %}"
+                         alt="{{ comment.user.username }}"
+                         width="60"
+                         height="60">
+                {% endif %}
+
+            </div>
+
+
+            <div class="media-body">
+
+                <h4>
+                    {% if comment.user.first_name or comment.user.last_name %}
+                        {{ comment.user.get_full_name }}
+                    {% else %}
+                        {{ comment.user.username }}
+                    {% endif %}
+                </h4>
+
+
+                <p class="date">
+                    {{ comment.created_date|date:"Y/m/d - H:i" }}
+                </p>
+
+
+                <p>
+                    {{ comment.text|linebreaksbr }}
+                </p>
+
+
+                {% if user.is_authenticated %}
+                    <a href="#product-comment-form"
+                       class="reply-comment"
+                       data-comment-id="{{ comment.id }}">
+                        پاسخ
+                    </a>
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% for reply in comment.replies.all %}
+
+        <div class="review_item comment_reply"
+             data-comment-id="{{ reply.id }}">
+
+            <div class="media">
+
+
+                <div class="d-flex">
+
+                    {% if reply.user.avatar %}
+
+                        <img src="{{ reply.user.avatar.url }}"
+                             alt="{{ reply.user.username }}"
+                             width="60"
+                             height="60">
+
+                    {% else %}
+
+                        <img src="{% static 'img/default-avatar.jpg' %}"
+                             alt="{{ reply.user.username }}"
+                             width="60"
+                             height="60">
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="media-body">
+
+                    <h4>
+
+                        {% if reply.user.first_name or reply.user.last_name %}
+                            {{ reply.user.get_full_name }}
+                        {% else %}
+                            {{ reply.user.username }}
+                        {% endif %}
+
+                    </h4>
+
+
+                    <p class="date">
+                        {{ reply.created_date|date:"Y/m/d - H:i" }}
+                    </p>
+
+
+                    <p>
+                        {{ reply.text|linebreaksbr }}
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    {% endfor %}
+
+
+{% empty %}
+
+    <div class="text-center">
+
+        <p>
+            هنوز نظری برای این محصول ثبت نشده است.
+        </p>
+
+    </div>
+
+{% endfor %}

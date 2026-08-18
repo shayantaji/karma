@@ -121,29 +121,29 @@
                                    class="input-text qty">
 
                             <button onclick="
-                            var result = document.getElementById('sst');
-                            var value = parseInt(result.value);
-                            var max = parseInt(result.max);
+                                var result = document.getElementById('sst');
+                                var value = parseInt(result.value);
+                                var max = parseInt(result.max);
 
-                            if (value < max) {
-                                result.value = value + 1;
-                            }
+                                if (value < max) {
+                                    result.value = value + 1;
+                                }
 
-                            return false;
-                        "
+                                return false;
+                            "
                                     class="increase items-count"
                                     type="button">
                                 <i class="lnr lnr-chevron-up"></i>
                             </button>
                             <button onclick="
-                            var result = document.getElementById('sst');
-                            var value = parseInt(result.value);
+                                var result = document.getElementById('sst');
+                                var value = parseInt(result.value);
 
-                            if (value > 1) {
-                                result.value = value - 1;
-                            }
-                            return false;
-                        "
+                                if (value > 1) {
+                                    result.value = value - 1;
+                                }
+                                return false;
+                            "
                                     class="reduced items-count"
                                     type="button">
 
@@ -187,145 +187,265 @@
     <section class="product_description_area">
         <div class="container">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
+
                 <li class="nav-item">
-                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                       aria-selected="true">توضیحات</a>
+
+                    <a class="nav-link active"
+                       id="home-tab"
+                       data-toggle="tab"
+                       href="#home"
+                       role="tab"
+                       aria-controls="home"
+                       aria-selected="true">
+
+                        توضیحات
+
+                    </a>
+
                 </li>
+
+
                 <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+
+                    <a class="nav-link"
+                       id="profile-tab"
+                       data-toggle="tab"
+                       href="#profile"
+                       role="tab"
                        aria-controls="profile"
-                       aria-selected="false">مشخصات</a>
+                       aria-selected="false">
+
+                        مشخصات
+
+                    </a>
+
                 </li>
+
+
                 <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+
+                    <a class="nav-link"
+                       id="contact-tab"
+                       data-toggle="tab"
+                       href="#contact"
+                       role="tab"
                        aria-controls="contact"
-                       aria-selected="false">نظرات</a>
+                       aria-selected="false">
+
+                        نظرات
+
+                    </a>
+
                 </li>
+
+
                 <li class="nav-item">
-                    <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab"
+
+                    <a class="nav-link"
+                       id="review-tab"
+                       data-toggle="tab"
+                       href="#review"
+                       role="tab"
                        aria-controls="review"
-                       aria-selected="false">مرورها</a>
+                       aria-selected="false">
+
+                        مرورها
+
+                    </a>
+
                 </li>
+
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <p>{{ product.description|linebreaksbr }}</p>
+
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                    <p>
+                        {{ product.description|linebreaksbr }}
+                    </p>
+
                 </div>
+
+
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
                     <div class="table-responsive">
+
                         <table class="table">
+
                             <tbody>
+
                             {% for specification in product.specifications.all %}
+
                                 <tr>
-                                    <td><h5>{{ specification.key }}</h5></td>
-                                    <td><h5>{{ specification.value }}</h5></td>
-                                </tr>
-                            {% empty %}
-                                <tr>
-                                    <td colspan="2">
-                                        <h5>مشخصاتی برای این محصول ثبت نشده است.</h5>
+
+                                    <td>
+                                        <h5>{{ specification.key }}</h5>
                                     </td>
+
+                                    <td>
+                                        <h5>{{ specification.value }}</h5>
+                                    </td>
+
                                 </tr>
+
+                            {% empty %}
+
+                                <tr>
+
+                                    <td colspan="2">
+
+                                        <h5>
+                                            مشخصاتی برای این محصول ثبت نشده است.
+                                        </h5>
+
+                                    </td>
+
+                                </tr>
+
                             {% endfor %}
+
                             </tbody>
+
                         </table>
+
                     </div>
+
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
                     <div class="row">
+
                         <div class="col-lg-6">
+
                             <div class="comment_list">
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="{% static 'img/product/review-1.png' %}" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>بلیک رویز</h4>
-                                            <h5>12 بهمن 1396 در 05:56 ب.ظ</h5>
-                                            <a class="reply_btn" href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطر آن چنان که لازم است
-                                        و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می‌باشد. کتابهای زیادی در شصت و سه درصد گذشته</p>
-                                </div>
-                                <div class="review_item reply">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="{% static 'img/product/review-2.png' %}" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>بلیک رویز</h4>
-                                            <h5>12 بهمن 1396 در 05:56 ب.ظ</h5>
-                                            <a class="reply_btn" href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطر آن چنان که لازم است
-                                        و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می‌باشد. کتابهای زیادی در شصت و سه درصد گذشته</p>
+
+                                <h4>
+                    <span id="comments-count">
+                        {{ comments.paginator.count }}
+                    </span>
+                                    نظر
+                                </h4>
+
+
+                                <div id="comments-list">
+
+                                    {% include 'includes/product_comment_list/product_comment_list.html' %}
 
                                 </div>
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="{% static 'img/product/review-3.png' %}" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>بلیک رویز</h4>
-                                            <h5>12 بهمن 1396 در 05:56 ب.ظ</h5>
-                                            <a class="reply_btn" href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطر آن چنان که لازم است
-                                        و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می‌باشد. کتابهای زیادی در شصت و سه درصد گذشته</p>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="review_box">
-                                <h4>ارسال نظر</h4>
-                                <form class="row contact_form" action="#" method="post" id="contactForm"
-                                      novalidate="novalidate">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                   placeholder="نام شما">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                   placeholder="ایمیل شما">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="number" name="number"
-                                                   placeholder="شماره تلفن">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <textarea class="form-control" name="message" id="message" rows="1"
-                                                      placeholder="پیام"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-right">
-                                        <button type="submit" value="submit" class="btn primary-btn">اکنون ارسال کنید
+
+                                {% if comments_has_next %}
+
+                                    <div class="text-center mt-4">
+
+                                        <button id="load-more-comments"
+                                                class="primary-btn"
+                                                data-page="1"
+                                                data-url="{% url 'load_more_product_comments' product.id %}">
+
+                                            نمایش نظرات بیشتر
+
                                         </button>
+
                                     </div>
-                                </form>
+
+                                {% endif %}
+
+
                             </div>
+
                         </div>
+
+
+                        <div class="col-lg-6">
+
+
+                            <div class="review_box">
+
+
+                                {% if user.is_authenticated %}
+
+
+                                    <h4 id="comment-form-title">
+                                        ارسال نظر
+                                    </h4>
+
+
+                                    <div id="comment-message"></div>
+
+
+                                    <form id="product-comment-form">
+
+                                        {% csrf_token %}
+
+
+                                        <input type="hidden"
+                                               name="parent_id"
+                                               id="parent-id"
+                                               value="">
+
+
+                                        <div class="form-group">
+
+                                            {{ comment_form.text }}
+
+                                        </div>
+
+
+                                        <button type="submit"
+                                                class="primary-btn"
+                                                id="comment-submit">
+
+                                            ارسال نظر
+
+                                        </button>
+
+
+                                        <button type="button"
+                                                class="btn btn-secondary"
+                                                id="cancel-reply"
+                                                style="display:none;">
+
+                                            لغو پاسخ
+
+                                        </button>
+
+
+                                    </form>
+
+
+                                {% else %}
+
+
+                                    <h4>
+                                        برای ثبت نظر وارد حساب شوید.
+                                    </h4>
+
+
+                                    <a href="{% url 'login' %}?next={{ request.path }}"
+                                       class="primary-btn">
+
+                                        ورود
+
+                                    </a>
+
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                        </div>
+
+
                     </div>
+
+
                 </div>
-                <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+
+                <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="row total_rate">
@@ -360,168 +480,118 @@
                                 </div>
                             </div>
                             <div class="review_list">
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="{% static 'img/product/review-1.png' %}" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>بلیک رویز</h4>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطر آن چنان که لازم است
-                                        و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می‌باشد. کتابهای زیادی در شصت و سه درصد گذشته</p>
 
-                                </div>
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="{% static 'img/product/review-2.png' %}" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>بلیک رویز</h4>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطر آن چنان که لازم است
-                                        و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می‌باشد. کتابهای زیادی در شصت و سه درصد گذشته</p>
+                                {% for comment in comments|slice:":3" %}
 
-                                </div>
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="{% static 'img/product/review-3.png' %}" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>بلیک رویز</h4>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطر آن چنان که لازم است
-                                        و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می‌باشد. کتابهای زیادی در شصت و سه درصد گذشته</p>
+                                    <div class="review_item">
 
-                                </div>
+                                        <div class="media">
+
+                                            <div class="d-flex">
+                                                <img src="{% static 'img/default-avatar.jpg' %}"
+                                                     alt=""
+                                                     width="60"
+                                                     height="60"
+                                                     style="object-fit: cover; border-radius: 50%;">
+                                            </div>
+                                            <div class="media-body">
+
+                                                <h4>
+                                                    {{ comment.user.username }}
+                                                </h4>
+
+
+                                                <h5>
+                                                    {{ comment.created_at|date:"Y/m/d H:i" }}
+                                                </h5>
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <p>
+                                            {{ comment.text }}
+                                        </p>
+
+
+                                    </div>
+
+
+                                {% empty %}
+
+                                    <p>
+                                        هنوز نظری ثبت نشده است.
+                                    </p>
+
+
+                                {% endfor %}
+
+
                             </div>
+
+
                         </div>
-                        <div class="col-lg-6">
-                            <div class="review_box">
-                                <h4>یک بررسی اضافه کنید</h4>
-                                <p>امتیاز شما:</p>
-                                <ul class="list">
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                </ul>
-                                <p>برجسته</p>
-                                <form class="row contact_form" action="#" method="post" id="contactForm"
-                                      novalidate="novalidate">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                   placeholder="نام شما" onfocus="this.placeholder = ''"
-                                                   onblur="this.placeholder = 'نام شما'">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                   placeholder="ایمیل شما" onfocus="this.placeholder = ''"
-                                                   onblur="this.placeholder = 'ایمیل شما'">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="number" name="number"
-                                                   placeholder="شماره تلفن" onfocus="this.placeholder = ''"
-                                                   onblur="this.placeholder = 'شماره تلفن'">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <textarea class="form-control" name="message" id="message" rows="1"
-                                                      placeholder="مرور" onfocus="this.placeholder = ''"
-                                                      onblur="this.placeholder = 'مرور'"></textarea></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-right">
-                                        <button type="submit" value="submit" class="primary-btn">اکنون ارسال کنید
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
     </section>
     <!--================End Product Description Area =================-->
 
-<!-- Start related-product Area -->
-{% if related_products %}
-<section class="related-product-area section_gap_bottom">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-6 text-center">
-                <div class="section-title">
-                    <h1>محصولات مرتبط</h1>
-                    <p>محصولات مرتبط با این محصول را مشاهده کنید.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="row">
-                    {% for product in related_products %}
-                    <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-                        <div class="single-related-product d-flex">
-                            <a href="{{ product.get_absolute_url }}">
-                                {% if product.main_image %}
-                                    <img src="{{ product.main_image.image.url }}" alt="{{ product.title }}" style="width:70px;height:70px;object-fit:cover;">
-                                {% endif %}
-                            </a>
-                            <div class="desc">
-                                <a href="{{ product.get_absolute_url }}" class="title">{{ product.title }}</a>
-                                <div class="price">
-                                    <h6>{{ product.final_price|floatformat:0 }} تومان</h6>
-                                    {% if product.discount_percent > 0 %}
-                                        <h6 class="l-through">{{ product.price|floatformat:0 }} تومان</h6>
-                                    {% endif %}
-                                </div>
-                            </div>
+    <!-- Start related-product Area -->
+    {% if related_products %}
+        <section class="related-product-area section_gap_bottom">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <div class="section-title">
+                            <h1>محصولات مرتبط</h1>
+                            <p>محصولات مرتبط با این محصول را مشاهده کنید.</p>
                         </div>
                     </div>
-                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            {% for product in related_products %}
+                                <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+                                    <div class="single-related-product d-flex">
+                                        <a href="{{ product.get_absolute_url }}">
+                                            {% if product.main_image %}
+                                                <img src="{{ product.main_image.image.url }}" alt="{{ product.title }}"
+                                                     style="width:70px;height:70px;object-fit:cover;">
+                                            {% endif %}
+                                        </a>
+                                        <div class="desc">
+                                            <a href="{{ product.get_absolute_url }}"
+                                               class="title">{{ product.title }}</a>
+                                            <div class="price">
+                                                <h6>{{ product.final_price|floatformat:0 }} تومان</h6>
+                                                {% if product.discount_percent > 0 %}
+                                                    <h6 class="l-through">{{ product.price|floatformat:0 }} تومان</h6>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
                 </div>
             </div>
+        </section>
+    {% endif %}
 
-        </div>
-    </div>
-</section>
-{% endif %}
+    <!-- End related-product Area -->
 
-<!-- End related-product Area -->
+    {% if user.is_authenticated %}
 
+        <script>
 
+            const productCommentUrl = "{% url 'add_product_comment' product.id %}";
+
+        </script>
+
+    {% endif %}
 {% endblock %}

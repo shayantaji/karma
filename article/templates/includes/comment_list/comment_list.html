@@ -1,0 +1,112 @@
+
+
+
+                            {% for comment in comments %}
+
+                                <!-- نظر اصلی -->
+                                <div class="comment-list"
+                                     data-comment-id="{{ comment.id }}">
+
+                                    <div class="single-comment justify-content-between d-flex">
+
+                                        <div class="user justify-content-between d-flex">
+
+                                            <div class="thumb">
+                                                <img src="{{ comment.user.avatar_url }}"
+                                                     alt="{{ comment.user.get_full_name }}">
+                                            </div>
+
+                                            <div class="desc">
+
+                                                <h5>
+                                                    <a href="#">
+                                                        {% if comment.user.first_name or comment.user.last_name %}
+                                                            {{ comment.user.get_full_name }}
+                                                        {% else %}
+                                                            {{ comment.user.username }}
+                                                        {% endif %}
+                                                    </a>
+                                                </h5>
+
+                                                <p class="date">
+                                                    {{ comment.created_date|date:"Y/m/d - H:i" }}
+                                                </p>
+
+                                                <p class="comment">
+                                                    {{ comment.text|linebreaksbr }}
+                                                </p>
+
+                                            </div>
+
+                                        </div>
+
+                                        {% if user.is_authenticated %}
+                                            <div class="reply-btn">
+                                                <a href="#comment-form"
+                                                   class="btn-reply text-uppercase reply-comment"
+                                                   data-comment-id="{{ comment.id }}">
+                                                    پاسخ
+                                                </a>
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- پاسخ نظر -->
+                                {% for reply in comment.replies.all %}
+
+                                    <div class="comment-list left-padding"
+                                         data-comment-id="{{ reply.id }}">
+
+                                        <div class="single-comment justify-content-between d-flex">
+
+                                            <div class="user justify-content-between d-flex">
+
+                                                <div class="thumb">
+                                                    <img src="{{ reply.user.avatar_url }}"
+                                                         alt="{{ reply.user.get_full_name }}">
+                                                </div>
+
+                                                <div class="desc">
+
+                                                    <h5>
+                                                        <a href="#">
+                                                            {% if reply.user.first_name or reply.user.last_name %}
+                                                                {{ reply.user.get_full_name }}
+                                                            {% else %}
+                                                                {{ reply.user.username }}
+                                                            {% endif %}
+                                                        </a>
+                                                    </h5>
+
+                                                    <p class="date">
+                                                        {{ reply.created_date|date:"Y/m/d - H:i" }}
+                                                    </p>
+
+                                                    <p class="comment">
+                                                        {{ reply.text|linebreaksbr }}
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            {% empty %}
+
+                                <p id="no-comments">
+                                    هنوز نظری برای این مقاله ثبت نشده است.
+                                </p>
+
+                            {% endfor %}
+
+                        </div>
+

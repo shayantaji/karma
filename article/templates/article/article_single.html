@@ -14,7 +14,9 @@
                 <div class="col-first">
                     <h1>جزئیات وبلاگ</h1>
                     <nav class="d-flex align-items-center">
-                        <a href="{% url 'home' %}">خانه<span class="lnr lnr-arrow-left"></span></a>
+                        <a href="{% url 'home' %}">
+                            خانه<span class="lnr lnr-arrow-left"></span>
+                        </a>
                         <a href="#">جزئیات وبلاگ</a>
                     </nav>
                 </div>
@@ -23,12 +25,13 @@
     </section>
     <!-- End Banner Area -->
 
+
     <!--================Blog Area =================-->
     <section class="blog_area single-post-area section_gap">
         <div class="container">
             <div class="row">
 
-                <!-- محتوا -->
+                <!-- محتوای اصلی -->
                 <div class="col-lg-8 posts-list">
 
                     <div class="single-post row">
@@ -36,7 +39,9 @@
                         <div class="col-lg-12">
                             {% if article.image %}
                                 <div class="feature-img">
-                                    <img class="img-fluid" src="{{ article.image.url }}" alt="{{ article.title }}">
+                                    <img class="img-fluid"
+                                         src="{{ article.image.url }}"
+                                         alt="{{ article.title }}">
                                 </div>
                             {% endif %}
                         </div>
@@ -46,13 +51,16 @@
 
                                 <div class="post_tag">
                                     {% for tag in article.tags.all %}
-                                        <a href="#">{{ tag.title }}{% if not forloop.last %}، {% endif %}</a>
+                                        <a href="#">
+                                            {{ tag.title }}{% if not forloop.last %}، {% endif %}
+                                        </a>
                                     {% empty %}
                                         <span>بدون برچسب</span>
                                     {% endfor %}
                                 </div>
 
                                 <ul class="blog_meta list">
+
                                     {% if article.author %}
                                         <li>
                                             <a href="#">
@@ -75,6 +83,7 @@
                                             {{ article.view_count }} مشاهده
                                         </a>
                                     </li>
+
                                 </ul>
 
                                 <ul class="social-links">
@@ -107,260 +116,293 @@
 
                     </div>
 
-                    <!-- نظرات -->
+
+                    <!-- ================= نظرات ================= -->
                     <div class="comments-area">
-                        <h4>05 نظر</h4>
 
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="{% static 'img/blog/c1.jpg' %}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5><a href="#">نام کاربر</a></h5>
-                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                        <p class="comment">
-                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="reply-btn">
-                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                                </div>
-                            </div>
+                        <h4>
+                            <span id="comments-count">{{ comments_count }}</span>
+                            نظر
+                        </h4>
+
+                        <div id="comments-list">
+
+                            {% include 'includes/comment_list/comment_list.html' %}
+
                         </div>
 
-                        <div class="comment-list left-padding">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="{% static 'img/blog/c2.jpg' %}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5><a href="#">نام کاربر</a></h5>
-                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                        <p class="comment">
-                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="reply-btn">
-                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                                </div>
-                            </div>
-                        </div>
+                        {% if comments_has_next %}
 
-                        <div class="comment-list left-padding">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="{% static 'img/blog/c3.jpg' %}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5><a href="#">نام کاربر</a></h5>
-                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                        <p class="comment">
-                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="reply-btn">
-                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="{% static 'img/blog/c4.jpg' %}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5><a href="#">نام کاربر</a></h5>
-                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                        <p class="comment">
-                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="reply-btn">
-                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="{% static 'img/blog/c5.jpg' %}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5><a href="#">نام کاربر</a></h5>
-                                        <p class="date">4 بهمن , 1401 در 3:12 ب.ظ</p>
-                                        <p class="comment">
-                                            هرگز خداحافظی نکن تا آخرش فرا رسد!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="reply-btn">
-                                    <a href="#" class="btn-reply text-uppercase">پاسخ</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- فرم نظر -->
-                    <div class="comment-form">
-                        <h4>یک پاسخ بگذارید</h4>
-
-                        <form>
-                            <div class="form-group form-inline">
-                                <div class="form-group col-lg-6 col-md-6 name">
-                                    <input type="text" class="form-control" id="name"
-                                           placeholder="نام شما">
-                                </div>
-
-                                <div class="form-group col-lg-6 col-md-6 email">
-                                    <input type="email" class="form-control" id="email"
-                                           placeholder="ایمیل شما">
-                                </div>
+                            <div class="text-center mt-4">
+                                <button id="load-more-comments"
+                                        class="primary-btn"
+                                        data-page="1"
+                                        data-url="{% url 'load_more_comments' article.id %}">
+                                    نمایش نظرات بیشتر
+                                </button>
                             </div>
 
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="subject"
-                                       placeholder="موضوع">
-                            </div>
-
-                            <div class="form-group">
-                            <textarea class="form-control mb-10"
-                                      rows="5"
-                                      name="message"
-                                      placeholder="متن نظر"
-                                      required></textarea>
-                            </div>
-
-                            <a href="#" class="primary-btn submit_btn">ارسال پاسخ</a>
-                        </form>
-                    </div>
-
-                </div>
-                <!-- پایان col-lg-8 -->
-
-                <!-- سایدبار -->
-                <div class="col-lg-4">
-                    <div class="blog_right_sidebar">
-                        <aside class="single_sidebar_widget search_widget">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="جستجوی پست">
-                                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><i class="lnr lnr-magnifier"></i></button>
-                </span>
-                            </div>
-                            <div class="br"></div>
-                        </aside>
-
-                        <aside class="single_sidebar_widget author_widget">
-                            <img class="author_img rounded-circle" src="{% static 'img/blog/author.png' %}" alt="">
-                            <h4>نویسنده برتر وبلاگ</h4>
-                            <p>تکنولوژی و دنیای دیجیتال</p>
-                            <div class="social_icon">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-github"></i></a>
-                                <a href="#"><i class="fa fa-behance"></i></a>
-                            </div>
-                            <p>در این وبلاگ درباره محصولات دیجیتال، تکنولوژی، گجت‌ها و راهنمای خرید محصولات مختلف صحبت
-                                می‌کنیم.</p>
-                            <div class="br"></div>
-                        </aside>
-
-                        <aside class="single_sidebar_widget popular_post_widget">
-                            <h3 class="widget_title">پست های پربازدید</h3>
-
-                            {% for article in popular_articles %}
-                                <div class="media post_item">
-                                    {% if article.image %}
-                                        <img src="{{ article.image.url }}" alt="{{ article.title }}" width="100"
-                                             height="70">
-                                    {% endif %}
-                                    <div class="media-body">
-                                        <a href="{% url 'article_single' article.slug %}">
-                                            <h3>{{ article.title }}</h3>
-                                        </a>
-                                        <p>{{ article.view_count }} بازدید</p>
-                                    </div>
-                                </div>
-                            {% empty %}
-                                <p>مقاله محبوبی وجود ندارد.</p>
-                            {% endfor %}
-                            <div class="br"></div>
-                        </aside>
-
-
-                        {% if site_banner %}
-                            <aside class="single_sidebar_widget ads_widget">
-                                <a href="{{ site_banner.url|default:'#' }}">
-                                    <img class="img-fluid"
-                                         src="{{ site_banner.image.url }}"
-                                         alt="{{ site_banner.title }}"
-                                         style="width:300px;height:400px;object-fit:cover;">
-                                </a>
-                                <div class="br"></div>
-                            </aside>
                         {% endif %}
 
 
-                        <aside class="single_sidebar_widget post_category_widget">
-                            <h4 class="widget_title">دسته بندی</h4>
-                            <ul class="list cat-list">
-                                {% for category in categories_sidebar %}
-                                    <li>
-                                        <a href="{% url 'article_list' %}?category={{ category.slug }}"
-                                           class="d-flex justify-content-between">
-                                            <p>{{ category.title }}</p>
-                                            <p>{{ category.article_count }}</p>
-                                        </a>
-                                    </li>
-                                {% empty %}
-                                    <li>
-                                        <p>دسته بندی وجود ندارد.</p>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                            <div class="br"></div>
-                        </aside>
+                        <!-- ================= فرم نظر ================= -->
+                        <div class="comment-form" id="comment-form">
 
-                        {% include 'includes/newletterssubscribers/newletterssubscribers.html' %}
+                            {% if user.is_authenticated %}
 
-                        <aside class="single_sidebar_widget tag_cloud_widget">
-                            <h4 class="widget_title">تگ ها</h4>
-                            <ul class="list">
-                                {% for tag in tags %}
-                                    <li>
-                                        <a href="{% url 'article_list' %}?tag={{ tag.slug }}">
-                                            {{ tag.title }}
-                                        </a>
-                                    </li>
-                                {% empty %}
-                                    <li>
-                                        <span>تگی وجود ندارد.</span>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </aside>
+                                <h4 id="comment-form-title">
+                                    یک نظر بگذارید
+                                </h4>
+
+                                <div id="comment-message"></div>
+
+                                <form id="article-comment-form">
+
+                                    {% csrf_token %}
+
+                                    <input type="hidden"
+                                           id="parent-id"
+                                           name="parent_id"
+                                           value="">
+
+                                    <div class="form-group">
+                                        {{ comment_form.text }}
+                                    </div>
+
+                                    <button type="submit"
+                                            class="primary-btn"
+                                            id="comment-submit">
+                                        ارسال نظر
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-secondary"
+                                            id="cancel-reply"
+                                            style="display: none;">
+                                        لغو پاسخ
+                                    </button>
+
+                                </form>
+
+                            {% else %}
+
+                                <h4>
+                                    برای ثبت نظر وارد حساب کاربری خود شوید.
+                                </h4>
+
+                                <a href="{% url 'login' %}?next={{ request.path }}"
+                                   class="primary-btn">
+                                    ورود به حساب
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if user.is_authenticated %}
+                            <script>
+                                const articleCommentUrl = "{% url 'add_article_comment' article.id %}";
+                            </script>
+                        {% endif %}
 
                     </div>
-                </div>
-                <!-- پایان سایدبار -->
+                    <!-- پایان col-lg-8 -->
 
+
+                    <!-- ================= سایدبار ================= -->
+                    <div class="col-lg-4">
+
+                        <div class="blog_right_sidebar">
+
+                            <aside class="single_sidebar_widget search_widget">
+                                <div class="input-group">
+
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="جستجوی پست">
+
+                                    <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="lnr lnr-magnifier"></i>
+                                </button>
+                            </span>
+
+                                </div>
+
+                                <div class="br"></div>
+                            </aside>
+
+
+                            <aside class="single_sidebar_widget author_widget">
+
+                                <img class="author_img rounded-circle"
+                                     src="{% static 'img/blog/author.png' %}"
+                                     alt="">
+
+                                <h4>نویسنده برتر وبلاگ</h4>
+
+                                <p>تکنولوژی و دنیای دیجیتال</p>
+
+                                <div class="social_icon">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-github"></i></a>
+                                    <a href="#"><i class="fa fa-behance"></i></a>
+                                </div>
+
+                                <p>
+                                    در این وبلاگ درباره محصولات دیجیتال، تکنولوژی،
+                                    گجت‌ها و راهنمای خرید محصولات مختلف صحبت می‌کنیم.
+                                </p>
+
+                                <div class="br"></div>
+
+                            </aside>
+
+
+                            <aside class="single_sidebar_widget popular_post_widget">
+
+                                <h3 class="widget_title">
+                                    پست های پربازدید
+                                </h3>
+
+                                {% for article in popular_articles %}
+
+                                    <div class="media post_item">
+
+                                        {% if article.image %}
+                                            <img src="{{ article.image.url }}"
+                                                 alt="{{ article.title }}"
+                                                 width="100"
+                                                 height="70">
+                                        {% endif %}
+
+                                        <div class="media-body">
+
+                                            <a href="{% url 'article_single' article.slug %}">
+                                                <h3>{{ article.title }}</h3>
+                                            </a>
+
+                                            <p>
+                                                {{ article.view_count }} بازدید
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                {% empty %}
+
+                                    <p>
+                                        مقاله محبوبی وجود ندارد.
+                                    </p>
+
+                                {% endfor %}
+
+                                <div class="br"></div>
+
+                            </aside>
+
+
+                            {% if site_banner %}
+
+                                <aside class="single_sidebar_widget ads_widget">
+
+                                    <a href="{{ site_banner.url|default:'#' }}">
+
+                                        <img class="img-fluid"
+                                             src="{{ site_banner.image.url }}"
+                                             alt="{{ site_banner.title }}"
+                                             style="width:300px;height:400px;object-fit:cover;">
+
+                                    </a>
+
+                                    <div class="br"></div>
+
+                                </aside>
+
+                            {% endif %}
+
+
+                            <aside class="single_sidebar_widget post_category_widget">
+
+                                <h4 class="widget_title">
+                                    دسته بندی
+                                </h4>
+
+                                <ul class="list cat-list">
+
+                                    {% for category in categories_sidebar %}
+
+                                        <li>
+
+                                            <a href="{% url 'article_list' %}?category={{ category.slug }}"
+                                               class="d-flex justify-content-between">
+
+                                                <p>{{ category.title }}</p>
+                                                <p>{{ category.article_count }}</p>
+
+                                            </a>
+
+                                        </li>
+
+                                    {% empty %}
+
+                                        <li>
+                                            <p>دسته بندی وجود ندارد.</p>
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                                <div class="br"></div>
+
+                            </aside>
+
+
+                            {% include 'includes/newletterssubscribers/newletterssubscribers.html' %}
+
+
+                            <aside class="single_sidebar_widget tag_cloud_widget">
+
+                                <h4 class="widget_title">
+                                    تگ ها
+                                </h4>
+
+                                <ul class="list">
+
+                                    {% for tag in tags %}
+
+                                        <li>
+
+                                            <a href="{% url 'article_list' %}?tag={{ tag.slug }}">
+                                                {{ tag.title }}
+                                            </a>
+
+                                        </li>
+
+                                    {% empty %}
+
+                                        <li>
+                                            <span>تگی وجود ندارد.</span>
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                            </aside>
+
+                        </div>
+
+                    </div>
+                    <!-- پایان سایدبار -->
+
+                </div>
             </div>
-        </div>
     </section>
     <!--================Blog Area =================-->
 
 {% endblock %}
-```

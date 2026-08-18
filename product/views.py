@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.views.generic import ListView, TemplateView, DetailView
-from product.models import Product, ProductCategory, ProductBrand
+from product.models import Product, ProductCategory, ProductBrand, ProductComment
 from django.db.models import Count, Q, F, ExpressionWrapper, FloatField,Min,Max
-
 from site_config.models import SiteBanner
-
+from django.contrib.auth.decorators import login_required
+from .forms import ProductCommentForm
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 # Create your views here.
 
@@ -137,5 +140,93 @@ class ProductSingleView(DetailView):
         context['related_products'] = Product.objects.filter(category=self.object.category,is_active=True,is_deleted=False
         ).exclude(id=self.object.id).select_related('category','brand').prefetch_related('images')[:9]
 
+        comments = self.object.comments.filter(
+            parent__isnull=True
+        ).select_related('user').prefetch_related(
+            'replies__user'
+        )
+
+        paginator = Paginator(comments, 10)
+
+        context['comments'] = paginator.page(1)
+
+        context['comments_has_next'] = paginator.num_pages > 1
+
+        context['comment_form'] = ProductCommentForm()
+
         return context
 
+
+
+@login_required
+def add_product_comment(request, product_id):
+
+    if request.method == 'POST':
+
+        form = ProductCommentForm(request.POST)
+
+        if form.is_valid():
+
+            comment = form.save(commit=False)
+
+            comment.product_id = product_id
+            comment.user = request.user
+
+            parent_id = request.POST.get('parent_id')
+
+            if parent_id:
+                parent_comment = ProductComment.objects.filter(
+                    id=parent_id,
+                    product_id=product_id
+                ).first()
+
+                if parent_comment:
+                    comment.parent = parent_comment
+
+            comment.save()
+
+            return JsonResponse({
+                'status':'success',
+                'message':'نظر شما ثبت شد'
+            })
+
+
+    return JsonResponse({
+        'status':'error',
+        'message':'خطا در ثبت نظر'
+    },status=400)
+
+def load_more_product_comments(request, product_id):
+
+    page = request.GET.get('page')
+
+    comments = ProductComment.objects.filter(
+        product_id=product_id,
+        parent__isnull=True,
+        is_approved=True
+    ).select_related('user').prefetch_related('replies__user')
+
+
+    paginator = Paginator(comments, 10)
+
+    try:
+        comments_page = paginator.page(page)
+    except:
+        return JsonResponse({
+            'html': '',
+            'has_next': False
+        })
+
+    html = render_to_string(
+        'includes/product_comment_list/product_comment_list.html',
+        {
+            'comments': comments_page
+        },
+        request=request
+    )
+
+
+    return JsonResponse({
+        'html': html,
+        'has_next': comments_page.has_next()
+    })

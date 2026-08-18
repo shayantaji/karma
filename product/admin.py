@@ -2,6 +2,10 @@ from django.contrib import admin
 from product.models import *
 
 
+class ProductCommentAdmin(admin.ModelAdmin):
+    list_display = ['user','product']
+    list_editable = ['product']
+
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
@@ -50,8 +54,7 @@ class ProductBrandAdmin(admin.ModelAdmin):
     list_editable = ['is_active']
 
 
-
-
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(ProductBrand, ProductBrandAdmin)
+admin.site.register(ProductComment,ProductCommentAdmin)

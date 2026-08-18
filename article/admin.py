@@ -1,5 +1,6 @@
 from django.contrib import admin
-from article.models import Article,ArticleCategory,ArticleTag
+from article.models import Article,ArticleCategory,ArticleTag,ArticleComment
+
 
 
 
@@ -22,10 +23,13 @@ class ArticleTagAdmin(admin.ModelAdmin):
     list_filter = ['is_active']
 
 
-
+class  ArticleCommentAdmin(admin.ModelAdmin):
+    list_display = ['user' ,'article']
+    list_editable = ['article']
 
 
 admin.site.register(Article,ArticleAdmin)
 admin.site.register(ArticleTag,ArticleTagAdmin)
 admin.site.register(ArticleCategory,ArticleCategoryAdmin)
+admin.site.register(ArticleComment,ArticleCommentAdmin)
 

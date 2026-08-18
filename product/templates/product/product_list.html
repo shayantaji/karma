@@ -231,7 +231,7 @@
 
                         {% for product in products %}
 
-                            {% include 'product/includes/each_product/each_product.html' %}
+                            {% include 'product/../includes/each_product/each_product.html' %}
 
                         {% empty %}
 
@@ -299,7 +299,7 @@
 
 
 
-    {% include 'product/includes/weekly_deals/weekly_deals.html' %}
+    {% include 'product/../includes/weekly_deals/weekly_deals.html' %}
 
 <script>
     const priceRangeMin={{ price_range.min_price|default:0 }};
