@@ -306,7 +306,7 @@ $(document).on('submit', '#article-comment-form', function (e) {
 
 
 
-// Product Load More Comments
+// Product  adn Article Load More Comments
 
 
 $(document).on('click','#load-more-comments',function(){

@@ -574,9 +574,10 @@ input.is-invalid {
     object-fit: cover;
 }
 
-.comment_reply{
+.comment_reply {
     margin-right: 50px;
     margin-top: 25px;
+    margin-bottom: 25px;
     padding-right: 20px;
     border-right: 3px solid #ffba00;
 }

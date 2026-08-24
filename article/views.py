@@ -158,16 +158,12 @@ def add_article_comment(request, article_id):
 
 def load_more_comments(request, article_id):
 
-    page = request.GET.get('page', 1)
 
-    comments = ArticleComment.objects.filter(
-        article_id=article_id,
-        parent__isnull=True
-    ).select_related(
-        'user'
-    ).prefetch_related(
-        'replies__user'
-    )
+    comments = ArticleComment.objects.filter(article_id=article_id,parent__isnull=True
+    ).select_related('user').prefetch_related('replies__user')
+
+
+    page = request.GET.get('page', 1)
 
     paginator = Paginator(comments, 10)
 

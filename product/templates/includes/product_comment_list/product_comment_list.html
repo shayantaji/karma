@@ -13,12 +13,14 @@
                     <img src="{{ comment.user.avatar.url }}"
                          alt="{{ comment.user.username }}"
                          width="60"
-                         height="60">
+                         height="60"
+                         style="object-fit: cover; border-radius: 50%;">
                 {% else %}
                     <img src="{% static 'img/default-avatar.jpg' %}"
                          alt="{{ comment.user.username }}"
                          width="60"
-                         height="60">
+                         height="60"
+                         style="object-fit: cover; border-radius: 50%;">
                 {% endif %}
 
             </div>
@@ -76,14 +78,16 @@
                         <img src="{{ reply.user.avatar.url }}"
                              alt="{{ reply.user.username }}"
                              width="60"
-                             height="60">
+                             height="60"
+                             style="object-fit: cover; border-radius: 50%;">
 
                     {% else %}
 
                         <img src="{% static 'img/default-avatar.jpg' %}"
                              alt="{{ reply.user.username }}"
                              width="60"
-                             height="60">
+                             height="60"
+                             style="object-fit: cover; border-radius: 50%;">
 
                     {% endif %}
 
