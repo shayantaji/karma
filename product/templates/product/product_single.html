@@ -109,11 +109,11 @@
 
                         <div class="product_count">
 
-                            <label for="qty">تعداد:</label>
+                            <label for="product-count">تعداد:</label>
 
                             <input type="number"
                                    name="qty"
-                                   id="sst"
+                                   id="product-count"
                                    min="1"
                                    max="{{ product.inventory }}"
                                    value="1"
@@ -121,7 +121,7 @@
                                    class="input-text qty">
 
                             <button onclick="
-                                var result = document.getElementById('sst');
+                                var result = document.getElementById('product-count');
                                 var value = parseInt(result.value);
                                 var max = parseInt(result.max);
 
@@ -130,20 +130,24 @@
                                 }
 
                                 return false;
-                            "
+    "
                                     class="increase items-count"
                                     type="button">
+
                                 <i class="lnr lnr-chevron-up"></i>
+
                             </button>
+
                             <button onclick="
-                                var result = document.getElementById('sst');
+                                var result = document.getElementById('product-count');
                                 var value = parseInt(result.value);
 
                                 if (value > 1) {
                                     result.value = value - 1;
                                 }
+
                                 return false;
-                            "
+                                   "
                                     class="reduced items-count"
                                     type="button">
 
@@ -153,19 +157,24 @@
 
                         </div>
 
+
                         <div class="card_area d-flex align-items-center">
 
                             {% if product.is_in_stock %}
 
-                                <a class="primary-btn" href="#">
+                                <a class="primary-btn"
+                                   href="#"
+                                   onclick="addProductToOrder({{ product.id }}); return false;">
                                     افزودن به سبد
                                 </a>
 
                             {% else %}
+
                                 <a class="primary-btn disabled"
                                    href="#">
                                     ناموجود
                                 </a>
+
                             {% endif %}
 
                             <a class="icon_btn" href="#">
@@ -175,358 +184,266 @@
                             <a class="icon_btn" href="#">
                                 <i class="lnr lnr-heart"></i>
                             </a>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--================End Single Product Area =================-->
+        <!--================End Single Product Area =================-->
 
-    <!--================Product Description Area =================-->
-    <section class="product_description_area">
-        <div class="container">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <!--================Product Description Area =================-->
+        <section class="product_description_area">
+            <div class="container">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
 
-                <li class="nav-item">
+                    <li class="nav-item">
 
-                    <a class="nav-link active"
-                       id="home-tab"
-                       data-toggle="tab"
-                       href="#home"
-                       role="tab"
-                       aria-controls="home"
-                       aria-selected="true">
+                        <a class="nav-link active"
+                           id="home-tab"
+                           data-toggle="tab"
+                           href="#home"
+                           role="tab"
+                           aria-controls="home"
+                           aria-selected="true">
 
-                        توضیحات
+                            توضیحات
 
-                    </a>
+                        </a>
 
-                </li>
-
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-                       id="profile-tab"
-                       data-toggle="tab"
-                       href="#profile"
-                       role="tab"
-                       aria-controls="profile"
-                       aria-selected="false">
-
-                        مشخصات
-
-                    </a>
-
-                </li>
+                    </li>
 
 
-                <li class="nav-item">
+                    <li class="nav-item">
 
-                    <a class="nav-link"
-                       id="contact-tab"
-                       data-toggle="tab"
-                       href="#contact"
-                       role="tab"
-                       aria-controls="contact"
-                       aria-selected="false">
+                        <a class="nav-link"
+                           id="profile-tab"
+                           data-toggle="tab"
+                           href="#profile"
+                           role="tab"
+                           aria-controls="profile"
+                           aria-selected="false">
 
-                        نظرات
+                            مشخصات
 
-                    </a>
+                        </a>
 
-                </li>
-
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-                       id="review-tab"
-                       data-toggle="tab"
-                       href="#review"
-                       role="tab"
-                       aria-controls="review"
-                       aria-selected="false">
-
-                        مرورها
-
-                    </a>
-
-                </li>
-
-            </ul>
-            <div class="tab-content" id="myTabContent">
-
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                    <p>
-                        {{ product.description|linebreaksbr }}
-                    </p>
-
-                </div>
+                    </li>
 
 
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <li class="nav-item">
 
-                    <div class="table-responsive">
+                        <a class="nav-link"
+                           id="contact-tab"
+                           data-toggle="tab"
+                           href="#contact"
+                           role="tab"
+                           aria-controls="contact"
+                           aria-selected="false">
 
-                        <table class="table">
+                            نظرات
 
-                            <tbody>
+                        </a>
 
-                            {% for specification in product.specifications.all %}
+                    </li>
 
-                                <tr>
 
-                                    <td>
-                                        <h5>{{ specification.key }}</h5>
-                                    </td>
+                    <li class="nav-item">
 
-                                    <td>
-                                        <h5>{{ specification.value }}</h5>
-                                    </td>
+                        <a class="nav-link"
+                           id="review-tab"
+                           data-toggle="tab"
+                           href="#review"
+                           role="tab"
+                           aria-controls="review"
+                           aria-selected="false">
 
-                                </tr>
+                            مرورها
 
-                            {% empty %}
+                        </a>
 
-                                <tr>
+                    </li>
 
-                                    <td colspan="2">
+                </ul>
+                <div class="tab-content" id="myTabContent">
 
-                                        <h5>
-                                            مشخصاتی برای این محصول ثبت نشده است.
-                                        </h5>
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                                    </td>
-
-                                </tr>
-
-                            {% endfor %}
-
-                            </tbody>
-
-                        </table>
+                        <p>
+                            {{ product.description|linebreaksbr }}
+                        </p>
 
                     </div>
 
-                </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
-                    <div class="row">
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-                        <div class="col-lg-6">
+                        <div class="table-responsive">
 
-                            <div class="comment_list">
+                            <table class="table">
 
-                                <h4>
-                    <span id="comments-count">
-                        {{ comments.paginator.count }}
-                    </span>
-                                    نظر
-                                </h4>
+                                <tbody>
 
+                                {% for specification in product.specifications.all %}
 
-                                <div id="comments-list">
+                                    <tr>
 
-                                    {% include 'includes/product_comment_list/product_comment_list.html' %}
+                                        <td>
+                                            <h5>{{ specification.key }}</h5>
+                                        </td>
 
-                                </div>
+                                        <td>
+                                            <h5>{{ specification.value }}</h5>
+                                        </td>
 
-
-                                {% if comments_has_next %}
-
-                                    <div class="text-center mt-4">
-
-                                        <button id="load-more-comments"
-                                                class="primary-btn"
-                                                data-page="1"
-                                                data-url="{% url 'load_more_product_comments' product.id %}">
-
-                                            نمایش نظرات بیشتر
-
-                                        </button>
-
-                                    </div>
-
-                                {% endif %}
-
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-lg-6">
-
-
-                            <div class="review_box">
-
-
-                                {% if user.is_authenticated %}
-
-
-                                    <h4 id="comment-form-title">
-                                        ارسال نظر
-                                    </h4>
-
-
-                                    <div id="comment-message"></div>
-
-
-                                    <form id="product-comment-form">
-
-                                        {% csrf_token %}
-
-
-                                        <input type="hidden"
-                                               name="parent_id"
-                                               id="parent-id"
-                                               value="">
-
-
-                                        <div class="form-group">
-
-                                            {{ comment_form.text }}
-
-                                        </div>
-
-
-                                        <button type="submit"
-                                                class="primary-btn"
-                                                id="comment-submit">
-
-                                            ارسال نظر
-
-                                        </button>
-
-
-                                        <button type="button"
-                                                class="btn btn-secondary"
-                                                id="cancel-reply"
-                                                style="display:none;">
-
-                                            لغو پاسخ
-
-                                        </button>
-
-
-                                    </form>
-
-
-                                {% else %}
-
-
-                                    <h4>
-                                        برای ثبت نظر وارد حساب شوید.
-                                    </h4>
-
-
-                                    <a href="{% url 'login' %}?next={{ request.path }}"
-                                       class="primary-btn">
-
-                                        ورود
-
-                                    </a>
-
-
-                                {% endif %}
-
-
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-                <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="row total_rate">
-                                <div class="col-6">
-                                    <div class="box_total">
-                                        <h5>به طور کلی</h5>
-                                        <h4>4.0</h4>
-                                        <h6>(03 مرورها)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="rating_list">
-                                        <h3>بر اساس 3 بررسی</h3>
-                                        <ul class="list">
-                                            <li><a href="#">5 ستاره <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">4 ستاره <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">3 ستاره <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">2 ستاره <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">1 ستاره &nbsp;<i class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="review_list">
-
-                                {% for comment in comments|slice:":3" %}
-
-                                    <div class="review_item">
-
-                                        <div class="media">
-
-                                            <div class="d-flex">
-                                                <img src="{% static 'img/default-avatar.jpg' %}"
-                                                     alt=""
-                                                     width="60"
-                                                     height="60"
-                                                     style="object-fit: cover; border-radius: 50%;">
-                                            </div>
-                                            <div class="media-body">
-
-                                                <h4>
-                                                    {{ comment.user.username }}
-                                                </h4>
-
-
-                                                <h5>
-                                                    {{ comment.created_at|date:"Y/m/d H:i" }}
-                                                </h5>
-
-
-                                            </div>
-
-                                        </div>
-
-
-                                        <p>
-                                            {{ comment.text }}
-                                        </p>
-
-
-                                    </div>
-
+                                    </tr>
 
                                 {% empty %}
 
-                                    <p>
-                                        هنوز نظری ثبت نشده است.
-                                    </p>
+                                    <tr>
 
+                                        <td colspan="2">
+
+                                            <h5>
+                                                مشخصاتی برای این محصول ثبت نشده است.
+                                            </h5>
+
+                                        </td>
+
+                                    </tr>
 
                                 {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                        <div class="row">
+
+                            <div class="col-lg-6">
+
+                                <div class="comment_list">
+
+                                    <h4>
+                    <span id="comments-count">
+                        {{ comments.paginator.count }}
+                    </span>
+                                        نظر
+                                    </h4>
+
+
+                                    <div id="comments-list">
+
+                                        {% include 'includes/product_comment_list/product_comment_list.html' %}
+
+                                    </div>
+
+
+                                    {% if comments_has_next %}
+
+                                        <div class="text-center mt-4">
+
+                                            <button id="load-more-comments"
+                                                    class="primary-btn"
+                                                    data-page="1"
+                                                    data-url="{% url 'load_more_product_comments' product.id %}">
+
+                                                نمایش نظرات بیشتر
+
+                                            </button>
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-lg-6">
+
+
+                                <div class="review_box">
+
+
+                                    {% if user.is_authenticated %}
+
+
+                                        <h4 id="comment-form-title">
+                                            ارسال نظر
+                                        </h4>
+
+
+                                        <div id="comment-message"></div>
+
+
+                                        <form id="product-comment-form">
+
+                                            {% csrf_token %}
+
+
+                                            <input type="hidden"
+                                                   name="parent_id"
+                                                   id="parent-id"
+                                                   value="">
+
+
+                                            <div class="form-group">
+
+                                                {{ comment_form.text }}
+
+                                            </div>
+
+
+                                            <button type="submit"
+                                                    class="primary-btn"
+                                                    id="comment-submit">
+
+                                                ارسال نظر
+
+                                            </button>
+
+
+                                            <button type="button"
+                                                    class="btn btn-secondary"
+                                                    id="cancel-reply"
+                                                    style="display:none;">
+
+                                                لغو پاسخ
+
+                                            </button>
+
+
+                                        </form>
+
+
+                                    {% else %}
+
+
+                                        <h4>
+                                            برای ثبت نظر وارد حساب شوید.
+                                        </h4>
+
+
+                                        <a href="{% url 'login' %}?next={{ request.path }}"
+                                           class="primary-btn">
+
+                                            ورود
+
+                                        </a>
+
+
+                                    {% endif %}
+
+
+                                </div>
 
 
                             </div>
@@ -535,63 +452,161 @@
                         </div>
 
 
-    </section>
-    <!--================End Product Description Area =================-->
-
-    <!-- Start related-product Area -->
-    {% if related_products %}
-        <section class="related-product-area section_gap_bottom">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6 text-center">
-                        <div class="section-title">
-                            <h1>محصولات مرتبط</h1>
-                            <p>محصولات مرتبط با این محصول را مشاهده کنید.</p>
-                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
+
+                    <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                         <div class="row">
-                            {% for product in related_products %}
-                                <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-                                    <div class="single-related-product d-flex">
-                                        <a href="{{ product.get_absolute_url }}">
-                                            {% if product.main_image %}
-                                                <img src="{{ product.main_image.image.url }}" alt="{{ product.title }}"
-                                                     style="width:70px;height:70px;object-fit:cover;">
-                                            {% endif %}
-                                        </a>
-                                        <div class="desc">
-                                            <a href="{{ product.get_absolute_url }}"
-                                               class="title">{{ product.title }}</a>
-                                            <div class="price">
-                                                <h6>{{ product.final_price|floatformat:0 }} تومان</h6>
-                                                {% if product.discount_percent > 0 %}
-                                                    <h6 class="l-through">{{ product.price|floatformat:0 }} تومان</h6>
-                                                {% endif %}
-                                            </div>
+                            <div class="col-lg-6">
+                                <div class="row total_rate">
+                                    <div class="col-6">
+                                        <div class="box_total">
+                                            <h5>به طور کلی</h5>
+                                            <h4>4.0</h4>
+                                            <h6>(03 مرورها)</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="rating_list">
+                                            <h3>بر اساس 3 بررسی</h3>
+                                            <ul class="list">
+                                                <li><a href="#">5 ستاره <i class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                                <li><a href="#">4 ستاره <i class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                                <li><a href="#">3 ستاره <i class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                                <li><a href="#">2 ستاره <i class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                                <li><a href="#">1 ستاره &nbsp;<i class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
-                            {% endfor %}
+                                <div class="review_list">
+
+                                    {% for comment in comments|slice:":3" %}
+
+                                        <div class="review_item">
+
+                                            <div class="media">
+
+                                                <div class="d-flex">
+                                                    <img src="{% static 'img/default-avatar.jpg' %}"
+                                                         alt=""
+                                                         width="60"
+                                                         height="60"
+                                                         style="object-fit: cover; border-radius: 50%;">
+                                                </div>
+                                                <div class="media-body">
+
+                                                    <h4>
+                                                        {{ comment.user.username }}
+                                                    </h4>
+
+
+                                                    <h5>
+                                                        {{ comment.created_at|date:"Y/m/d H:i" }}
+                                                    </h5>
+
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <p>
+                                                {{ comment.text }}
+                                            </p>
+
+
+                                        </div>
+
+
+                                    {% empty %}
+
+                                        <p>
+                                            هنوز نظری ثبت نشده است.
+                                        </p>
+
+
+                                    {% endfor %}
+
+
+                                </div>
+
+
+                            </div>
+
+
+        </section>
+        <!--================End Product Description Area =================-->
+
+        <!-- Start related-product Area -->
+        {% if related_products %}
+            <section class="related-product-area section_gap_bottom">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 text-center">
+                            <div class="section-title">
+                                <h1>محصولات مرتبط</h1>
+                                <p>محصولات مرتبط با این محصول را مشاهده کنید.</p>
+                            </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                {% for product in related_products %}
+                                    <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+                                        <div class="single-related-product d-flex">
+                                            <a href="{{ product.get_absolute_url }}">
+                                                {% if product.main_image %}
+                                                    <img src="{{ product.main_image.image.url }}"
+                                                         alt="{{ product.title }}"
+                                                         style="width:70px;height:70px;object-fit:cover;">
+                                                {% endif %}
+                                            </a>
+                                            <div class="desc">
+                                                <a href="{{ product.get_absolute_url }}"
+                                                   class="title">{{ product.title }}</a>
+                                                <div class="price">
+                                                    <h6>{{ product.final_price|floatformat:0 }} تومان</h6>
+                                                    {% if product.discount_percent > 0 %}
+                                                        <h6 class="l-through">{{ product.price|floatformat:0 }}
+                                                            تومان</h6>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
-        </section>
-    {% endif %}
+            </section>
+        {% endif %}
 
-    <!-- End related-product Area -->
+        <!-- End related-product Area -->
 
-    {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
 
-        <script>
+            <script>
 
-            const productCommentUrl = "{% url 'add_product_comment' product.id %}";
+                const productCommentUrl = "{% url 'add_product_comment' product.id %}";
 
-        </script>
+            </script>
 
-    {% endif %}
+        {% endif %}
 {% endblock %}

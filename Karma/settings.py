@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'site_config',
     'user_panel',
     'polls',
+    'order',
 
 ]
 

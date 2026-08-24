@@ -1,0 +1,22 @@
+{% extends 'main/_layout.html' %}
+{% block title %}
+	صفحه سبدخرید
+{% endblock %}
+
+
+{% block content %}
+
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+
+        <div id="order-detail-content">
+            {% include 'user_panel/user_basket_content.html' %}
+        </div>
+
+    </div>
+</section>
+<!--================End Cart Area =================-->
+
+
+{% endblock %}
