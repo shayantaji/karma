@@ -1,0 +1,206 @@
+{% extends 'main/_layout.html' %}
+{% load static %}
+
+{% block title %}
+    لیست علاقه‌مندی‌ها
+{% endblock %}
+
+{% block content %}
+
+    <section class="related-product-area section_gap">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+
+                    <div class="section-title">
+                        <h1>لیست علاقه‌مندی‌ها</h1>
+                        <p>محصولات مورد علاقه شما</p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            {% if favorites %}
+
+                <div class="row">
+
+                    {% for favorite in favorites %}
+
+                        {% with product=favorite.product %}
+
+                            <div class="col-lg-4 col-md-6 mb-30">
+
+                                <div class="single-related-product d-flex">
+
+                                    <a href="{{ product.get_absolute_url }}">
+
+                                        {% if product.main_image %}
+
+                                            <img src="{{ product.main_image.image.url }}"
+                                                 alt="{{ product.title }}"
+                                                 style="width:100px;height:100px;object-fit:cover;">
+
+                                        {% else %}
+
+                                            <img src="{% static 'img/default-product.jpg' %}"
+                                                 alt="{{ product.title }}"
+                                                 style="width:100px;height:100px;object-fit:cover;">
+
+                                        {% endif %}
+
+                                    </a>
+
+
+                                    <div class="desc">
+
+                                        <a href="{{ product.get_absolute_url }}"
+                                           class="title">
+
+                                            {{ product.title }}
+
+                                        </a>
+
+
+                                        <div class="price">
+
+                                            {% if product.discount_percent > 0 %}
+
+                                                <h6>
+                                                    {{ product.final_price|floatformat:0 }}
+                                                    تومان
+                                                </h6>
+
+                                                <h6 class="l-through">
+
+                                                    {{ product.price|floatformat:0 }}
+                                                    تومان
+
+                                                </h6>
+
+                                            {% else %}
+
+                                                <h6>
+                                                    {{ product.final_price|floatformat:0 }}
+                                                    تومان
+                                                </h6>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% endwith %}
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- Pagination -->
+
+                {% if is_paginated %}
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <nav class="blog-pagination justify-content-center d-flex">
+
+                                <ul class="pagination">
+
+                                    {% if page_obj.has_previous %}
+
+                                        <li class="page-item">
+
+                                            <a href="?page={{ page_obj.previous_page_number }}"
+                                               class="page-link"
+                                               aria-label="Previous">
+
+                                                <span aria-hidden="true">
+                                                    <span class="lnr lnr-chevron-right"></span>
+                                                </span>
+
+                                            </a>
+
+                                        </li>
+
+                                    {% endif %}
+
+
+                                    {% for page in paginator.page_range %}
+
+                                        <li class="page-item {% if page == page_obj.number %}active{% endif %}">
+
+                                            <a href="?page={{ page }}"
+                                               class="page-link">
+
+                                                {{ page }}
+
+                                            </a>
+
+                                        </li>
+
+                                    {% endfor %}
+
+
+                                    {% if page_obj.has_next %}
+
+                                        <li class="page-item">
+
+                                            <a href="?page={{ page_obj.next_page_number }}"
+                                               class="page-link"
+                                               aria-label="Next">
+
+                                                <span aria-hidden="true">
+                                                    <span class="lnr lnr-chevron-left"></span>
+                                                </span>
+
+                                            </a>
+
+                                        </li>
+
+                                    {% endif %}
+
+                                </ul>
+
+                            </nav>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+            {% else %}
+
+                <div class="text-center">
+
+                    <h4>
+                        هنوز محصولی به لیست علاقه‌مندی‌های شما اضافه نشده است.
+                    </h4>
+
+                    <br>
+
+                    <a class="primary-btn"
+                       href="{% url 'product_list' %}">
+
+                        مشاهده محصولات
+
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+    </section>
+
+{% endblock %}

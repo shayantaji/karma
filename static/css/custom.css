@@ -581,3 +581,17 @@ input.is-invalid {
     padding-right: 20px;
     border-right: 3px solid #ffba00;
 }
+
+.favorite-btn .lnr-heart {
+    transition: all 0.2s ease;
+}
+
+.favorite-btn.favorite-active .lnr-heart {
+    color: #ff1744 !important;
+    transform: scale(1.15);
+    text-shadow: 0 0 2px rgba(255, 23, 68, 0.25);
+}
+
+.favorite-btn.favorite-active:hover .lnr-heart {
+    color: #e6002d !important;
+}

@@ -2,14 +2,16 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 
 from order.models import Order, OrderDetail
+from product.models import Product
 from .forms import ChangePasswordForm
+from .models import UserFavorite
 
 
 # Create your views here.
@@ -144,4 +146,68 @@ def change_order_detail_count(request: HttpRequest):
     return JsonResponse({
         'status': 'success',
         'body': render_to_string('user_panel/user_basket_content.html', context)
+    })
+
+
+
+class UserFavoritesView(ListView):
+    template_name = 'user_panel/user_favorites.html'
+    model = UserFavorite
+    context_object_name = 'favorites'
+    paginate_by = 9
+
+    def get_queryset(self):
+        return UserFavorite.objects.filter(user=self.request.user).select_related('product').prefetch_related('product__images').order_by('-id')
+
+
+
+@login_required
+def toggle_favorite(request):
+
+    product_id = request.GET.get('product_id')
+
+    if not product_id:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'محصول مشخص نشده است.'
+        }, status=400)
+
+    product = Product.objects.filter(
+        id=product_id,
+        is_active=True,
+        is_deleted=False
+    ).first()
+
+    if product is None:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'محصول مورد نظر یافت نشد.'
+        }, status=404)
+
+    favorite = UserFavorite.objects.filter(
+        user=request.user,
+        product=product
+    ).first()
+
+    if favorite:
+
+        favorite.delete()
+
+        return JsonResponse({
+            'status': 'success',
+            'is_favorite': False,
+            'message': 'این محصول از لیست علاقه‌مندی‌های شما حذف شد.',
+            'icon': 'info'
+        })
+
+    UserFavorite.objects.create(
+        user=request.user,
+        product=product
+    )
+
+    return JsonResponse({
+        'status': 'success',
+        'is_favorite': True,
+        'message': 'محصول با موفقیت به لیست علاقه‌مندی‌های شما اضافه شد.',
+        'icon': 'success'
     })

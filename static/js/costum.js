@@ -528,11 +528,12 @@ document.querySelectorAll('.reply-comment').forEach(button => {
 
 
 //add_product_to_order
+function addProductToOrder(productId, productCount = 1) {
 
-function addProductToOrder(productId) {
-    const productCount = $('#product-count').val();
-
-    $.get('/order/add-to-order/?product_id=' + productId + '&count=' + productCount).then(res => {
+    $.get('/order/add-to-order/', {
+        product_id: productId,
+        count: productCount
+    }).then(function (res) {
 
         Swal.fire({
             title: 'اعلان',
@@ -541,12 +542,24 @@ function addProductToOrder(productId) {
             showCancelButton: false,
             confirmButtonColor: '#3085d6',
             confirmButtonText: res.confirm_button_text
-        }).then((result) => {
+        }).then(function (result) {
 
             if (result.isConfirmed && res.status === 'not_auth') {
                 window.location.href = '/user/login/';
             }
 
+        });
+
+    }).fail(function (xhr) {
+
+        console.log('STATUS:', xhr.status);
+        console.log('RESPONSE:', xhr.responseText);
+
+        Swal.fire({
+            title: 'خطا',
+            text: 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.',
+            icon: 'error',
+            confirmButtonText: 'باشه'
         });
 
     });
@@ -570,3 +583,74 @@ function changeOrderDetailCount(detailId, state) {
         }
     });
 }
+
+
+
+// Ajax favorites icon in single-product
+$(document).on('click', '.favorite-btn', function (e) {
+
+    e.preventDefault();
+
+    const button = $(this);
+    const productId = button.data('product-id');
+    const url = button.data('url');
+
+    $.get(url, {
+        product_id: productId
+    }).then(function (res) {
+
+        if (res.status === 'success') {
+
+            Swal.fire({
+                title: 'اعلان',
+                text: res.message,
+                icon: 'success',
+                confirmButtonText: 'باشه'
+            });
+
+            if (res.is_favorite) {
+
+                button.addClass('favorite-active');
+
+                button.attr(
+                    'title',
+                    'حذف از لیست علاقه‌مندی‌ها'
+                );
+
+            } else {
+
+                button.removeClass('favorite-active');
+
+                button.attr(
+                    'title',
+                    'اضافه کردن به لیست علاقه‌مندی‌ها'
+                );
+
+            }
+
+        } else {
+
+            Swal.fire({
+                title: 'اعلان',
+                text: res.message,
+                icon: 'warning',
+                confirmButtonText: 'باشه'
+            });
+
+        }
+
+    }).fail(function (xhr) {
+
+        console.log('STATUS:', xhr.status);
+        console.log('RESPONSE:', xhr.responseText);
+
+        Swal.fire({
+            title: 'خطا',
+            text: 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.',
+            icon: 'error',
+            confirmButtonText: 'باشه'
+        });
+
+    });
+
+});
