@@ -595,3 +595,14 @@ input.is-invalid {
 .favorite-btn.favorite-active:hover .lnr-heart {
     color: #e6002d !important;
 }
+
+#payment-btn.payment-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: auto;
+}
+
+#payment-btn.payment-active {
+    opacity: 1;
+    cursor: pointer;
+}

@@ -4,11 +4,17 @@ from product.models import Product
 
 
 # Create your models here.
-
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='کاربر')
-    is_paid = models.BooleanField(verbose_name='نهایی شده/نشده',default=False)
+    is_paid = models.BooleanField(verbose_name='نهایی شده/نشده', default=False)
     payment_date = models.DateField(null=True, blank=True, verbose_name='تاریخ پرداخت')
+    first_name = models.CharField(max_length=100, null=True, blank=True, verbose_name='نام')
+    last_name = models.CharField(max_length=100, null=True, blank=True, verbose_name='نام خانوادگی')
+    phone = models.CharField(max_length=11, null=True, blank=True, verbose_name='شماره تلفن')
+    email = models.EmailField(null=True, blank=True, verbose_name='ایمیل')
+    address = models.TextField(null=True, blank=True, verbose_name='آدرس')
+    postal_code = models.CharField(max_length=10, null=True, blank=True, verbose_name='کد پستی')
+    description = models.TextField(null=True, blank=True, verbose_name='توضیحات سفارش')
 
     def __str__(self):
         return str(self.user)
@@ -30,6 +36,8 @@ class Order(models.Model):
         verbose_name_plural = 'سبدهای خرید کاربران'
 
 
+
+
 class OrderDetail(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='سبد خرید')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='محصول')
@@ -37,7 +45,7 @@ class OrderDetail(models.Model):
     count = models.IntegerField(verbose_name='تعداد')
 
     def get_total_price(self):
-        return self.count * self.product.final_price
+        return self.count * self.final_price
 
     def __str__(self):
         return str(self.order)

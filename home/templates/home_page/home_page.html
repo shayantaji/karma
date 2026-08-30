@@ -1,6 +1,7 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
 {% load render_partial %}
+{% load poll_extras %}
 {% block title %}
     صفحه خانه
 {% endblock %}
@@ -243,15 +244,15 @@
 
                                         {% if product.discount_percent > 0 %}
                                             <h6>
-                                                {{ product.final_price|floatformat:0 }} تومان
+                                                {{ product.final_price| three_digits_currency }} تومان
                                             </h6>
 
                                             <h6 class="l-through">
-                                                {{ product.price|floatformat:0 }} تومان
+                                                {{ product.price| three_digits_currency }} تومان
                                             </h6>
                                         {% else %}
                                             <h6>
-                                                {{ product.price|floatformat:0 }} تومان
+                                                {{ product.price| three_digits_currency }} تومان
                                             </h6>
                                         {% endif %}
 
@@ -331,15 +332,15 @@
 
                                         {% if product.discount_percent > 0 %}
                                             <h6>
-                                                {{ product.final_price|floatformat:0 }} تومان
+                                                {{ product.final_price| three_digits_currency }} تومان
                                             </h6>
 
                                             <h6 class="l-through">
-                                                {{ product.price|floatformat:0 }} تومان
+                                                {{ product.price| three_digits_currency }} تومان
                                             </h6>
                                         {% else %}
                                             <h6>
-                                                {{ product.price|floatformat:0 }} تومان
+                                                {{ product.price|three_digits_currency }} تومان
                                             </h6>
                                         {% endif %}
 
@@ -463,17 +464,17 @@
                                         {% if product.discount_percent > 0 %}
 
                                             <h6>
-                                                {{ product.final_price|floatformat:0 }} تومان
-                                            </h6>
+                                                {{ product.final_price| three_digits_currency }} تومان
+                                             </h6>
 
                                             <h6 class="l-through">
-                                                {{ product.price|floatformat:0 }} تومان
+                                                {{ product.price| three_digits_currency }} تومان
                                             </h6>
 
                                         {% else %}
 
                                             <h6>
-                                                {{ product.price|floatformat:0 }} تومان
+                                                {{ product.price| three_digits_currency }} تومان
                                             </h6>
 
                                         {% endif %}

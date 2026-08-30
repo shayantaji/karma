@@ -3,3 +3,4 @@ from django.apps import AppConfig
 
 class UserPanelConfig(AppConfig):
     name = 'user_panel'
+    verbose_name = 'پنل کاربری'

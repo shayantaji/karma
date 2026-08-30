@@ -67,7 +67,7 @@
                         <td>
 
                             <h5>
-                                {{ detail.product.final_price|three_digits_currency}}
+                                {{ detail.product.final_price|three_digits_currency }}
 
                             </h5>
 
@@ -174,8 +174,7 @@
                                 ادامه خرید
                             </a>
 
-                            <a class="primary-btn"
-                               href="#">
+                            <a class="primary-btn" href="{% url 'checkout' %}">
                                 تسویه حساب
                             </a>
 

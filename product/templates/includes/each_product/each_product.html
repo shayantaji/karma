@@ -14,18 +14,25 @@
 
             <div class="price">
 
-                <h6>
-                    {{ product.price | three_digits_currency }}
-                </h6>
+                {% if product.discount_percent > 0 %}
 
-                {% if product.old_price %}
-                    <h6 class="l-through">
-                        {{ product.old_price }}
+                    <h6>
+                        {{ product.final_price|three_digits_currency }}
                     </h6>
+
+                    <h6 class="l-through">
+                        {{ product.price|three_digits_currency }}
+                    </h6>
+
+                {% else %}
+
+                    <h6>
+                        {{ product.price|three_digits_currency }}
+                    </h6>
+
                 {% endif %}
 
             </div>
-
             <div class="prd-bottom">
 
                 {% if user.is_authenticated %}

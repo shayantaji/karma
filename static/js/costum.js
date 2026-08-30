@@ -654,3 +654,47 @@ $(document).on('click', '.favorite-btn', function (e) {
     });
 
 });
+
+//payment
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('checkout-form');
+    const accept = document.getElementById('accept');
+    const paymentBtn = document.getElementById('payment-btn');
+
+    if (!form || !accept || !paymentBtn) return;
+
+    const requiredFields = form.querySelectorAll('.checkout-required');
+
+    function checkForm() {
+        let valid = true;
+
+        requiredFields.forEach(function (field) {
+            if (!field.value.trim()) {
+                valid = false;
+            }
+        });
+
+        if (valid && accept.checked) {
+            paymentBtn.classList.remove('payment-disabled');
+            paymentBtn.classList.add('payment-active');
+        } else {
+            paymentBtn.classList.remove('payment-active');
+            paymentBtn.classList.add('payment-disabled');
+        }
+    }
+
+    requiredFields.forEach(function (field) {
+        field.addEventListener('input', checkForm);
+        field.addEventListener('change', checkForm);
+    });
+
+    accept.addEventListener('change', checkForm);
+
+    paymentBtn.addEventListener('click', function (event) {
+        if (paymentBtn.classList.contains('payment-disabled')) {
+            event.preventDefault();
+        }
+    });
+
+    checkForm();
+});
