@@ -1,0 +1,75 @@
+{% extends 'main/_layout.html' %}
+{% load poll_extras %}
+
+{% block title %}
+    پرداخت موفق
+{% endblock %}
+
+{% block content %}
+
+    <section class="section_gap">
+        <div class="container">
+
+            ```
+            <div class="order_box">
+
+                <div class="text-center">
+                    <h2>پرداخت با موفقیت انجام شد 🎉</h2>
+                    <p>سفارش شما با موفقیت ثبت شد.</p>
+                </div>
+
+                <ul class="list list_2">
+
+                    <li>
+                        <a href="#">
+                            شماره سفارش
+                            <span>#{{ order.id }}</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            کد پیگیری
+                            <span>{{ order.tracking_code }}</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            مبلغ پرداخت شده
+                            <span>
+                        {{ order.calculate_total_price|three_digits_currency }}
+                    </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            تاریخ پرداخت
+                            <span>{{ order.payment_date|default:"-" }}</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            وضعیت سفارش
+                            <span>در حال آماده‌سازی</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <div class="text-center mt-4">
+                    <a href="{% url 'my_orders' %}" class="primary-btn">
+                        سفارش‌های من
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+        ```
+
+    </section>
+
+{% endblock %}

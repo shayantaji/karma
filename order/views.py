@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
-
+from django.utils import timezone
+import random
 from order.models import Order, OrderDetail
 from product.models import Product
 
@@ -104,7 +105,6 @@ def checkout(request):
         'order': order
     })
 
-
 @login_required
 def payment(request):
     order = Order.objects.filter(
@@ -124,12 +124,64 @@ def payment(request):
     ]
 
     if not all(required_fields):
-        messages.error(request, 'لطفاً ابتدا اطلاعات صورتحساب را کامل کنید.')
+        messages.error(request, 'لطفاً ابتدا اطلاعات صورتحساب را کامل و ثبت کنید.')
         return redirect('checkout')
 
     if not order.orderdetail_set.exists():
         return redirect('user_basket_page')
 
-    return render(request, 'order/payment.html', {
+    if request.method == 'POST':
+        result = request.POST.get('result')
+
+        if result == 'success':
+            order.is_paid = True
+            order.payment_date = timezone.now().date()
+            order.tracking_code = str(random.randint(1000000000, 9999999999))
+            order.status = 'processing'
+            order.save()
+            return redirect('payment_success', order_id=order.id)
+
+        if result == 'failed':
+            return render(request, 'order/payment_failed.html', {'order': order})
+
+    return render(request, 'order/payment.html', {'order': order})
+
+@login_required
+def payment_success(request, order_id):
+    order = Order.objects.filter(
+        id=order_id,
+        user=request.user,
+        is_paid=True
+    ).prefetch_related('orderdetail_set__product').first()
+
+    if not order:
+        return redirect('user_basket_page')
+
+    return render(request, 'order/payment_success.html', {'order': order})
+
+
+@login_required
+def my_orders(request):
+    orders = Order.objects.filter(
+        user=request.user,
+        is_paid=True
+    ).order_by('-id')
+
+    return render(request, 'order/my_orders.html', {
+        'orders': orders
+    })
+
+@login_required
+def order_detail(request, order_id):
+    order = Order.objects.filter(
+        id=order_id,
+        user=request.user,
+        is_paid=True
+    ).prefetch_related('orderdetail_set__product').first()
+
+    if not order:
+        return redirect('my_orders')
+
+    return render(request, 'order/order_detail.html', {
         'order': order
     })

@@ -1,0 +1,126 @@
+{% extends 'main/_layout.html' %}
+{% load poll_extras %}
+
+{% block title %}
+    سفارش‌های من
+{% endblock %}
+
+{% block content %}
+
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>سفارش‌های من</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="{% url 'home' %}">
+                            خانه
+                            <span class="lnr lnr-arrow-left"></span>
+                        </a>
+                        <a href="#">سفارش‌های من</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section_gap">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <h3 class="mb-4">سفارش‌های من</h3>
+
+                    {% if orders %}
+                        {% for order in orders %}
+
+                            <div class="order_box mb-4">
+
+                                <h4>سفارش شماره {{ order.id }}</h4>
+
+                                <ul class="list list_2">
+
+                                    <li>
+                                        <a href="#">
+                                            مبلغ سفارش
+                                            <span>
+                {{ order.calculate_total_price|three_digits_currency }}
+            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            کد پیگیری
+                                            <span>
+                {{ order.tracking_code }}
+            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            تاریخ پرداخت
+                                            <span>
+                {{ order.payment_date|default:"-" }}
+            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            وضعیت پرداخت
+                                            <span>
+                پرداخت شده
+            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            وضعیت سفارش
+                                            <span>
+                {% if order.status == 'processing' %}
+                    در حال آماده‌سازی
+                {% elif order.status == 'shipped' %}
+                    ارسال شده
+                {% elif order.status == 'delivering' %}
+                    در حال تحویل
+                {% elif order.status == 'delivered' %}
+                    تحویل داده شده
+                {% else %}
+                    {{ order.status }}
+                {% endif %}
+            </span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                                <a href="{% url 'order_detail' order.id %}" class="primary-btn">
+                                    جزئیات سفارش
+                                </a>
+
+                            </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="text-center">
+                            <h4>هنوز سفارشی ثبت نکرده‌اید.</h4>
+                            <a href="{% url 'home' %}" class="primary-btn mt-3">
+                                شروع خرید
+                            </a>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}

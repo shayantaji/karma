@@ -28,11 +28,13 @@
         <div class="container">
 
             {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} text-right">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+                <div id="message-box">
+                    {% for message in messages %}
+                        <div class="checkout-message {% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
             {% endif %}
 
             <div class="billing_details">
@@ -108,8 +110,7 @@
                             </div>
 
                             <div class="col-md-12 form-group">
-                                <button type="submit"
-                                        class="primary-btn">
+                                <button type="submit" class="primary-btn">
                                     ثبت اطلاعات و ادامه
                                 </button>
                             </div>
@@ -132,10 +133,8 @@
                                 </li>
 
                                 {% for detail in order.orderdetail_set.all %}
-
                                     <li>
                                         <a href="{{ detail.product.get_absolute_url }}">
-
                                             {{ detail.product.title }}
 
                                             <span class="middle">
@@ -145,10 +144,8 @@
                                             <span class="last">
                                             {{ detail.get_total_price|three_digits_currency }}
                                         </span>
-
                                         </a>
                                     </li>
-
                                 {% endfor %}
 
                             </ul>
@@ -203,6 +200,5 @@
 
         </div>
     </section>
-
 
 {% endblock %}

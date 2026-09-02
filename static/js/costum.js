@@ -657,6 +657,17 @@ $(document).on('click', '.favorite-btn', function (e) {
 
 //payment
 document.addEventListener('DOMContentLoaded', function () {
+    const messageBox = document.getElementById('message-box');
+
+    if (messageBox) {
+        setTimeout(function () {
+            messageBox.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }, 100);
+    }
+
     const form = document.getElementById('checkout-form');
     const accept = document.getElementById('accept');
     const paymentBtn = document.getElementById('payment-btn');

@@ -2,12 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.views.generic import TemplateView, ListView
+from django.views.generic import  ListView
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView
 from django.urls import reverse_lazy
-
+from django.contrib import messages
 from order.models import Order, OrderDetail
 from product.models import Product
 from .forms import ChangePasswordForm
@@ -16,10 +16,6 @@ from .models import UserFavorite
 
 # Create your views here.
 
-
-
-class TrackingView(TemplateView):
-    template_name = 'user_panel/tracking.html'
 
 
 
@@ -210,4 +206,30 @@ def toggle_favorite(request):
         'is_favorite': True,
         'message': 'محصول با موفقیت به لیست علاقه‌مندی‌های شما اضافه شد.',
         'icon': 'success'
+    })
+
+
+@login_required
+def tracking(request):
+    order = None
+
+    if request.method == 'POST':
+        tracking_code = request.POST.get('order', '').strip()
+        email = request.POST.get('email', '').strip()
+
+        order = Order.objects.filter(
+            tracking_code=tracking_code,
+            user=request.user,
+            is_paid=True
+        ).prefetch_related('orderdetail_set__product').first()
+
+        if order:
+            if order.email and order.email != email:
+                order = None
+
+        if not order:
+            messages.error(request, 'سفارشی با اطلاعات وارد شده پیدا نشد.')
+
+    return render(request, 'user_panel/tracking.html', {
+        'order': order
     })

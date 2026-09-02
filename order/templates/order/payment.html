@@ -5,21 +5,24 @@
 {% endblock %}
 
 {% block content %}
-
-<section class="banner-area organic-breadcrumb">
+<section class="section_gap">
     <div class="container">
-        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-            <div class="col-first">
-                <h1>پرداخت</h1>
-            </div>
+        <div class="text-center">
+            <h2>درگاه پرداخت تستی</h2>
+            <p>شماره سفارش: {{ order.id }}</p>
+            <p>مبلغ قابل پرداخت: {{ order.calculate_total_price }} تومان</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="result" value="success" class="primary-btn">
+                    پرداخت موفق
+                </button>
+
+                <button type="submit" name="result" value="failed" class="primary-btn">
+                    پرداخت ناموفق
+                </button>
+            </form>
         </div>
     </div>
 </section>
-
-<section class="section_gap">
-    <div class="container">
-        <h3>در حال انتقال به درگاه پرداخت...</h3>
-    </div>
-</section>
-
 {% endblock %}

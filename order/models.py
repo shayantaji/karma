@@ -15,6 +15,8 @@ class Order(models.Model):
     address = models.TextField(null=True, blank=True, verbose_name='آدرس')
     postal_code = models.CharField(max_length=10, null=True, blank=True, verbose_name='کد پستی')
     description = models.TextField(null=True, blank=True, verbose_name='توضیحات سفارش')
+    tracking_code = models.CharField(max_length=20, unique=True, null=True, blank=True, verbose_name='کد پیگیری')
+    status = models.CharField(max_length=30, default='processing', verbose_name='وضعیت سفارش')
 
     def __str__(self):
         return str(self.user)

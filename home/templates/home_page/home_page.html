@@ -259,12 +259,17 @@
                                     </div>
 
                                     <div class="prd-bottom">
+                                        <a href="javascript:void(0);"
+                                           class="social-info"
+                                           onclick="addProductToOrder({{ product.id }}, 1); return false;">
 
-                                        <a href="#" class="social-info">
                                             <span class="ti-bag"></span>
-                                            <p class="hover-text">افزودن به سبد</p>
-                                        </a>
 
+                                            <p class="hover-text">
+                                                افزودن به سبد
+                                            </p>
+
+                                        </a>
                                         <a href="#" class="social-info">
                                             <span class="lnr lnr-heart"></span>
                                             <p class="hover-text">لیست آرزوها</p>
@@ -465,7 +470,7 @@
 
                                             <h6>
                                                 {{ product.final_price| three_digits_currency }} تومان
-                                             </h6>
+                                            </h6>
 
                                             <h6 class="l-through">
                                                 {{ product.price| three_digits_currency }} تومان

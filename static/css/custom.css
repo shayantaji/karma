@@ -606,3 +606,27 @@ input.is-invalid {
     opacity: 1;
     cursor: pointer;
 }
+
+#message-box {
+    margin-bottom: 30px;
+}
+
+.checkout-message {
+    padding: 14px 20px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: right;
+}
+
+.checkout-message.error {
+    background: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+}
+
+.checkout-message.success {
+    background: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
