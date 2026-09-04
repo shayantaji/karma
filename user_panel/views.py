@@ -233,3 +233,30 @@ def tracking(request):
     return render(request, 'user_panel/tracking.html', {
         'order': order
     })
+
+
+
+
+@login_required
+def user_panel(request):
+    user = request.user
+
+    if request.method == 'POST':
+        user.first_name = request.POST.get('first_name', '').strip()
+        user.last_name = request.POST.get('last_name', '').strip()
+        user.email = request.POST.get('email', '').strip()
+        user.about_user = request.POST.get('about_user', '').strip()
+        user.address = request.POST.get('address', '').strip()
+
+        avatar = request.FILES.get('avatar')
+
+        if avatar:
+            user.avatar = avatar
+
+        user.save()
+
+        messages.success(request, 'اطلاعات شما با موفقیت ذخیره شد.')
+
+    return render(request, 'user_panel/user_panel.html', {
+        'user': user
+    })

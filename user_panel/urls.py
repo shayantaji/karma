@@ -17,4 +17,6 @@ urlpatterns = [
 
     path('toggle-favorite/', views.toggle_favorite, name='toggle_favorite'),
 
+    path('user-panel/', views.user_panel, name='user_panel'),
+
 ]
