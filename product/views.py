@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+from django.shortcuts import render
 from django.views.generic import ListView, TemplateView, DetailView
 from product.models import Product, ProductCategory, ProductBrand, ProductComment
 from django.db.models import Count, Q, F, ExpressionWrapper, FloatField,Min,Max
@@ -230,3 +231,80 @@ def load_more_product_comments(request, product_id):
         'html': html,
         'has_next': comments_page.has_next()
     })
+
+
+
+class ProductSearchView(ListView):
+    template_name = 'product/product_search.html'
+    model = Product
+    context_object_name = 'products'
+    paginate_by = 9
+
+    def get_paginate_by(self, queryset):
+        per_page = self.request.GET.get('per_page')
+
+        if per_page in ['6', '9', '12']:
+            return int(per_page)
+
+        return self.paginate_by
+
+    def get_queryset(self):
+        query = self.request.GET.get('q', '').strip()
+
+        queryset = Product.objects.filter(
+            is_active=True,
+            is_deleted=False
+        )
+
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query) |
+                Q(short_description__icontains=query)
+            )
+
+        queryset = queryset.annotate(
+            calculated_final_price=ExpressionWrapper(
+                F('price') - (F('price') * F('discount_percent') / 100),
+                output_field=FloatField()
+            )
+        )
+
+        sort = self.request.GET.get('sort', '1')
+
+        if sort == '2':
+            queryset = queryset.order_by('-created_date')
+        elif sort == '3':
+            queryset = queryset.order_by('calculated_final_price')
+        else:
+            queryset = queryset.order_by('-created_date')
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        query_params = self.request.GET.copy()
+        query_params.pop('page', None)
+
+        context['query_params'] = query_params.urlencode()
+        context['query'] = self.request.GET.get('q', '').strip()
+
+        context['weekly_deals'] = Product.objects.filter(
+            is_active=True,
+            is_deleted=False,
+            discount_percent__gt=0
+        ).select_related(
+            'category',
+            'brand'
+        ).prefetch_related(
+            'images'
+        ).order_by(
+            '-discount_percent'
+        )[:9]
+
+        context['site_banner'] = SiteBanner.objects.filter(
+            position=SiteBanner.SiteBannerPositions.PRODUCT_LIST,
+            is_active=True
+        ).first()
+
+        return context

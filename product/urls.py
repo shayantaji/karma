@@ -12,6 +12,8 @@ urlpatterns = [
 
     path('comments/load/<int:product_id>/',views.load_more_product_comments,name='load_more_product_comments'),
 
+    path('search/', views.ProductSearchView.as_view(), name='product_search'),
+
 
 
 ]

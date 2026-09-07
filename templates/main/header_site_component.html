@@ -203,11 +203,21 @@
 
                     <div class="karma-nav-icons">
 
-                        <a href="#" class="karma-search">
-
+                        <a href="javascript:void(0);" class="karma-search" id="search-toggle">
                             <span class="lnr lnr-magnifier"></span>
-
                         </a>
+
+                        <div class="karma-search-box" id="search-box">
+                            <form action="{% url 'product_search' %}" method="get">
+                                <input type="text"
+                                       name="q"
+                                       placeholder="جستجوی محصول..."
+                                       autocomplete="off">
+                                <button type="submit">
+                                    <span class="lnr lnr-magnifier"></span>
+                                </button>
+                            </form>
+                        </div>
 
                         <a href="{% url 'user_basket_page' %}" class="karma-cart">
 

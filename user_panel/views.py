@@ -145,15 +145,18 @@ def change_order_detail_count(request: HttpRequest):
     })
 
 
-
-class UserFavoritesView(ListView):
+class UserFavoritesView(LoginRequiredMixin, ListView):
     template_name = 'user_panel/user_favorites.html'
     model = UserFavorite
     context_object_name = 'favorites'
     paginate_by = 9
 
     def get_queryset(self):
-        return UserFavorite.objects.filter(user=self.request.user).select_related('product').prefetch_related('product__images').order_by('-id')
+        return UserFavorite.objects.filter(
+            user=self.request.user
+        ).select_related('product').prefetch_related(
+            'product__images'
+        ).order_by('-id')
 
 
 
