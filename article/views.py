@@ -3,6 +3,8 @@ from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import  ListView, DetailView
+
+from account_module.models import User
 from article.forms import ArticleCommentForm
 from article.models import Article, ArticleCategory, ArticleTag, ArticleComment
 from site_config.models import SiteBanner
@@ -20,40 +22,92 @@ class ArticleView(ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        queryset = Article.objects.filter(is_active=True,is_deleted=False).select_related('category','author').prefetch_related('tags')
+        queryset = Article.objects.filter(
+            is_active=True,
+            is_deleted=False
+        ).select_related(
+            'category',
+            'author'
+        ).prefetch_related(
+            'tags'
+        )
 
         category = self.request.GET.get('category')
 
         if category:
-            queryset = queryset.filter(category__slug=category)
+            queryset = queryset.filter(
+                category__slug=category
+            )
 
         tag = self.request.GET.get('tag')
 
         if tag:
-            queryset = queryset.filter(tags__slug=tag)
+            queryset = queryset.filter(
+                tags__slug=tag
+            )
 
         return queryset
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['categories'] = ArticleCategory.objects.filter(is_active=True).annotate(article_count=Count('articles'
-        ,filter=Q(articles__is_active=True,articles__is_deleted=False))).order_by('-article_count')[:3]
+        context['categories'] = ArticleCategory.objects.filter(
+            is_active=True
+        ).annotate(
+            article_count=Count(
+                'articles',
+                filter=Q(
+                    articles__is_active=True,
+                    articles__is_deleted=False
+                )
+            )
+        ).order_by('-article_count')[:3]
 
-        context['categories_sidebar'] = ArticleCategory.objects.filter(is_active=True).annotate(article_count=Count('articles'
-        ,filter=Q(articles__is_active=True,articles__is_deleted=False))).order_by('-article_count')[:8]
+        context['categories_sidebar'] = ArticleCategory.objects.filter(
+            is_active=True
+        ).annotate(
+            article_count=Count(
+                'articles',
+                filter=Q(
+                    articles__is_active=True,
+                    articles__is_deleted=False
+                )
+            )
+        ).order_by('-article_count')[:8]
 
-        context['tags'] = ArticleTag.objects.filter(is_active=True)
+        context['tags'] = ArticleTag.objects.filter(
+            is_active=True
+        )
 
-        context['popular_articles'] = Article.objects.filter(is_active=True,is_deleted=False).order_by('-view_count')[:4]
+        context['popular_articles'] = Article.objects.filter(
+            is_active=True,
+            is_deleted=False
+        ).order_by('-view_count')[:4]
 
+        top_author = User.objects.annotate(
+            article_count=Count(
+                'articles',
+                filter=Q(
+                    articles__is_active=True,
+                    articles__is_deleted=False
+                )
+            )
+        ).filter(
+            article_count__gt=0
+        ).order_by(
+            '-article_count'
+        ).first()
+
+        context['top_author'] = top_author
 
         query_params = self.request.GET.copy()
         query_params.pop('page', None)
         context['query_params'] = query_params.urlencode()
 
-        context['site_banner'] = SiteBanner.objects.filter(position=SiteBanner.SiteBannerPositions.ARTICLE_LIST,is_active=True).first()
+        context['site_banner'] = SiteBanner.objects.filter(
+            position=SiteBanner.SiteBannerPositions.ARTICLE_LIST,
+            is_active=True
+        ).first()
 
         return context
 
@@ -99,6 +153,11 @@ class ArticleSingleView(DetailView):
         context['comments_has_next'] = paginator.num_pages > 1
 
         context['comment_form'] = ArticleCommentForm()
+
+        top_author = User.objects.annotate(article_count=Count('articles',filter=Q(articles__is_active=True,articles__is_deleted=False))
+        ).filter(article_count__gt=0).order_by('-article_count').first()
+
+        context['top_author'] = top_author
 
         return context
 

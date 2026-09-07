@@ -36,20 +36,37 @@ class ArticleTag(models.Model):
         return self.title
 
 
-
 class Article(models.Model):
 
     title = models.CharField(max_length=300)
 
     slug = models.SlugField(unique=True)
 
-    category = models.ForeignKey(ArticleCategory,on_delete=models.PROTECT,related_name='articles')
+    category = models.ForeignKey(
+        ArticleCategory,
+        on_delete=models.PROTECT,
+        related_name='articles'
+    )
 
-    author = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
+    author = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='articles'
+    )
 
-    tags = models.ManyToManyField(ArticleTag,blank=True,related_name='articles')
+    tags = models.ManyToManyField(
+        ArticleTag,
+        blank=True,
+        related_name='articles'
+    )
 
-    image = models.ImageField(upload_to='articles/',blank=True,null=True)
+    image = models.ImageField(
+        upload_to='articles/',
+        blank=True,
+        null=True
+    )
 
     short_description = models.CharField(max_length=500)
 
@@ -75,6 +92,7 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         return reverse('article_single', args=[self.slug])
+
 
 class ArticleComment(models.Model):
 

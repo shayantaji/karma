@@ -78,6 +78,7 @@
 
 
 
+
                                                     {{ page_obj.previous_page_number }}{% if query_params %}&{{ query_params }}{% endif %}"
                                                class="page-link"
                                                aria-label="Previous">
@@ -101,6 +102,7 @@
                                     {% if page_obj.has_next %}
                                         <li class="page-item">
                                             <a href="?page=
+
 
 
 
@@ -136,18 +138,36 @@
                         </aside>
 
                         <aside class="single_sidebar_widget author_widget">
-                            <img class="author_img rounded-circle" src="{% static 'img/blog/author.png' %}" alt="">
-                            <h4>نویسنده برتر وبلاگ</h4>
-                            <p>تکنولوژی و دنیای دیجیتال</p>
-                            <div class="social_icon">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-github"></i></a>
-                                <a href="#"><i class="fa fa-behance"></i></a>
-                            </div>
-                            <p>در این وبلاگ درباره محصولات دیجیتال، تکنولوژی، گجت‌ها و راهنمای خرید محصولات مختلف صحبت
-                                می‌کنیم.</p>
+
+                            {% if top_author %}
+
+                                <img class="author_img rounded-circle"
+                                     src="{{ top_author.avatar_url }}"
+                                     alt="{{ top_author }}">
+
+                                <h4>{{ top_author }}</h4>
+
+                                <p>نویسنده برتر وبلاگ</p>
+
+                                <div class="social_icon">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-github"></i></a>
+                                    <a href="#"><i class="fa fa-behance"></i></a>
+                                </div>
+
+                                {% if top_author.about_user %}
+                                    <p>{{ top_author.about_user }}</p>
+                                {% else %}
+                                    <p>
+                                        نویسنده مقالات تکنولوژی و دنیای دیجیتال.
+                                    </p>
+                                {% endif %}
+
+                            {% endif %}
+
                             <div class="br"></div>
+
                         </aside>
 
                         <aside class="single_sidebar_widget popular_post_widget">
