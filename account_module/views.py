@@ -52,14 +52,14 @@ class RegisterView(FormView):
         ).isoformat()
         print(otp)
 
-        # sms_sent = send_verify_sms(phone, otp)
-        #
-        # if not sms_sent:
-        #     form.add_error(
-        #         None,
-        #         'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
-        #     )
-        #     return self.form_invalid(form)
+        sms_sent = send_verify_sms(phone, otp)
+
+        if not sms_sent:
+            form.add_error(
+                None,
+                'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
+            )
+            return self.form_invalid(form)
 
         return super().form_valid(form)
 
@@ -210,14 +210,14 @@ class ForgotPasswordView(FormView):
 
         print("FORGOT PASSWORD OTP:", otp)
 
-        # sms_sent = send_verify_sms(phone, otp)
-        #
-        # if not sms_sent:
-        #     form.add_error(
-        #         None,
-        #         'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
-        #     )
-        #     return self.form_invalid(form)
+        sms_sent = send_verify_sms(phone, otp)
+
+        if not sms_sent:
+            form.add_error(
+                None,
+                'ارسال پیامک تایید با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
+            )
+            return self.form_invalid(form)
 
         return super().form_valid(form)
 
