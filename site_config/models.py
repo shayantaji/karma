@@ -10,7 +10,7 @@ class SiteSetting(models.Model):
     phone = models.CharField(max_length=200, blank=True, null=True, verbose_name='تلفن')
     fax = models.CharField(max_length=200, blank=True, null=True, verbose_name='فکس')
     email = models.EmailField(blank=True, null=True, verbose_name='ایمیل')
-    email_text = models.CharField(blank=True, null=True, verbose_name='متن برای ایمیل')
+    email_text = models.CharField(blank=True, null=True, max_length=200, verbose_name='متن برای ایمیل')
     telegram_url = models.CharField( max_length=200,blank=True, null=True, verbose_name='لینک تلگرام')
     instagram_url = models.CharField( max_length=200,blank=True, null=True, verbose_name='لینک اینستاگرام')
     github_url = models.URLField(blank=True, null=True, verbose_name='لینک گیت هاب')
