@@ -14,3 +14,4 @@ db.sqlite3
 
 staticfiles/
 data.json
+passenger_wsgi.py
