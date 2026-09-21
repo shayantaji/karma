@@ -1,6 +1,6 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
-{% load render_partial %}
+{% load poll_extras %}
 {% block title %}
     جزئیات محصول
 {% endblock %}
@@ -54,17 +54,17 @@
                         {% if product.discount_percent > 0 %}
 
                             <div>
-                                <del>{{ product.price|floatformat:0 }} تومان</del>
+                                <del>{{ product.price|three_digits_currency }} </del>
                             </div>
 
                             <h2>
-                                {{ product.final_price|floatformat:0 }} تومان
+                                {{ product.final_price|three_digits_currency }}
                             </h2>
 
                         {% else %}
 
                             <h2>
-                                {{ product.price|floatformat:0 }} تومان
+                                {{ product.price|three_digits_currency }}
                             </h2>
                         {% endif %}
 

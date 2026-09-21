@@ -55,8 +55,10 @@
 
                                         <div class="banner-product-image">
                                             {% if product.main_image %}
-                                                <img src="{{ product.main_image.image.url }}"
-                                                     alt="{{ product.title }}">
+                                                <a href="{{ product.get_absolute_url }}">
+                                                    <img src="{{ product.main_image.image.url }}"
+                                                         alt="{{ product.title }}">
+                                                </a>
                                             {% endif %}
                                         </div>
 
@@ -229,9 +231,11 @@
                             <div class="single-product">
 
                                 {% if product.main_image %}
-                                    <img class="img-fluid"
-                                         src="{{ product.main_image.image.url }}"
-                                         alt="{{ product.title }}">
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <img class="img-fluid"
+                                             src="{{ product.main_image.image.url }}"
+                                             alt="{{ product.title }}">
+                                    </a>
                                 {% endif %}
 
                                 <div class="product-details">
