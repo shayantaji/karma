@@ -1,25 +1,24 @@
-from kavenegar import KavenegarAPI
+import requests
 from django.conf import settings
-
 
 def send_verify_sms(phone, code):
     try:
-        api = KavenegarAPI(settings.KAVENEGAR_API_KEY)
+        url = "https://rest.payamak-panel.com/api/SendSMS/SendOtp"
 
-        params = {
-            "sender": "2000660110",
-            "receptor": phone,
-            "message": f"کد تایید شما: {code}"
+        data = {
+            "username": settings.MELIPAYAMAK_USERNAME,
+            "password": settings.MELIPAYAMAK_API_KEY,
+            "to": phone,
+            "from": settings.MELIPAYAMAK_SENDER,
+            "code": code,
         }
 
-        response = api.sms_send(params)
+        response = requests.post(url, data=data, timeout=10)
 
-        return True
+        print(response.text)
+        return response.ok
 
     except Exception as e:
-
         print(type(e))
-
         print(e)
-
         return False
