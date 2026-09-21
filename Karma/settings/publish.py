@@ -15,9 +15,9 @@ CSRF_TRUSTED_ORIGINS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'uboytlgw_karma_project_db',
-        'USER': 'uboytlgw_shayan11exe',
-        'PASSWORD': 'Def11esteghlal',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
         'OPTIONS': {
             'autocommit': True,
         }
